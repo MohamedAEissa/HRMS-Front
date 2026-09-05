@@ -1,0 +1,60 @@
+/* Palette & Typography Colors */
+.text-navy { color: #0f172a !important; }
+.text-slate { color: #64748b !important; }
+.text-orange { color: #ff6b35 !important; }
+
+.bg-orange-soft {
+  background-color: rgba(255, 107, 53, 0.1) !important;
+}
+
+/* Icon Box Dimensions */
+.icon-box {
+  width: 36px;
+  height: 36px;
+}
+
+/* Orange Button Style */
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.btn-orange-main:hover:not(:disabled) {
+  opacity: 0.9;
+  color: #ffffff;
+}
+
+.btn-orange-main:disabled {
+  background-color: #cbd5e1;
+  color: #ffffff;
+}
+
+/* Action Hover Effect */
+.hover-bg:hover {
+  background-color: #f1f5f9 !important;
+}
+
+
+.text-xs {
+  font-size: 0.8125rem; /* حجم خط ملموم وأنيق */
+}
+
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff !important; /* لون الخط أبيض */
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-orange-main:hover {
+  background-color: #e85a26;
+  color: #ffffff !important;
+  transform: translateY(-1px); /* رفعة بسيطة جداً بتدي إحساس هادي */
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25) !important;
+}
+
+.btn-orange-main:active {
+  transform: translateY(0);
+}

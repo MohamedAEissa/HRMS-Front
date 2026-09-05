@@ -1,0 +1,177 @@
+<section class="attendance-wrapper py-4">
+  <div class="container-fluid px-4">
+    
+    <!-- Header & Actions -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold text-navy mb-1">Attendance & Leave Records</h3>
+        <p class="text-slate small mb-0">Track daily employee check-ins, check-outs, and work hour calculations.</p>
+      </div>
+      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#RecordAttendanceModal" (click)="openAddAttendanceModal()">
+        <i class="fa-solid fa-clock-precision text-xs"></i>
+        <span>Record Attendance</span>
+      </button>
+    </div>
+
+    <!-- Attendance Table Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 custom-table">
+            <thead class="bg-light text-uppercase text-slate text-xxs fw-bold border-bottom">
+              <tr>
+                <th class="py-3 ps-4" style="width: 50px;">#</th>
+                <th class="py-3">Employee</th>
+                <th class="py-3">Department</th>
+                <th class="py-3">Date</th>
+                <th class="py-3">Check In</th>
+                <th class="py-3">Check Out</th>
+                <th class="py-3">Overtime</th>
+                <th class="py-3">Deduction</th>
+                <th class="py-3">Status</th>
+                <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let att of attendanceData; let i = index" class="smooth-row">
+                <td class="ps-4 text-slate text-xs fw-semibold">{{ i + 1 }}</td>
+                <td>
+                  <h6 class="mb-0 fw-semibold text-navy text-xs">{{ att.employeeName }}</h6>
+                </td>
+                <td class="text-slate text-xs">{{ att.departmentName }}</td>
+                
+                <!-- Date Badge -->
+                <td>
+                  <span class="badge bg-light text-navy border text-xxs px-2.5 py-1.5 rounded-2 font-monospace">
+                    {{ att.date | date:'yyyy-MM-dd' }}
+                  </span>
+                </td>
+                
+                <!-- Check In -->
+                <td>
+                  <span class="badge bg-light text-slate border text-xxs px-2 py-1 rounded-2">
+                    {{ formatTimeDisplay(att.checkInTime, att.status) }}
+                  </span>
+                </td>
+
+                <!-- Check Out Time -->
+                <td>
+                  <span class="badge bg-light text-slate border text-xxs px-2 py-1 rounded-2">
+                    {{ formatTimeDisplay(att.checkOutTime, att.status) }}
+                  </span>
+                </td>
+                
+                <!-- Overtime Dynamic Calculation -->
+                <td>
+                  <span class="text-success fw-semibold text-xs">
+                    {{ calculateOvertime(att.checkOutTime) }}
+                  </span>
+                </td>
+                
+                <!-- Deduction Dynamic Calculation -->
+                <td>
+                  <span class="text-danger fw-semibold text-xs">
+                    {{ calculateDeduction(att.checkInTime, att.checkOutTime) }}
+                  </span>
+                </td>
+                
+                <!-- Status Map -->
+                <td>
+                  <span class="badge border text-xxs px-2.5 py-1 rounded-2" [ngClass]="getStatusClass(att.status)">
+                    {{ getStatusText(att.status) }}
+                  </span>
+                </td>
+                
+                <td class="text-end pe-4">
+                  <button class="btn btn-icon-smooth text-slate me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#RecordAttendanceModal" (click)="openEditAttendanceModal(att)">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button (click)="deleteAttendance(att.id)" class="btn btn-icon-smooth text-danger" title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Empty State -->
+              <tr *ngIf="attendanceData?.length === 0">
+                <td colspan="10" class="text-center py-5 text-slate">
+                  <i class="fa-regular fa-folder-open d-block fs-2 mb-2 opacity-50"></i>
+                  <span class="text-xs">No attendance records found.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal: Record Attendance -->
+<div class="modal fade" id="RecordAttendanceModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+      <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold text-navy text-sm">{{ isEditMode ? 'Edit Attendance' : 'Record Employee Attendance' }}</h5>
+        <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form [formGroup]="attendanceFormGroup" (ngSubmit)="recordAttendance()">
+          
+          <!-- Employee Dropdown -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
+            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="employeeId">
+              <option [ngValue]="null" disabled>Select Employee</option>
+              <option *ngFor="let emp of employeeData" [value]="emp.id">
+                {{ emp.fullName }} ({{ emp.departmentName }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Date -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Date</label>
+            <input type="date" class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="date">
+          </div>
+
+          <!-- Times (CheckInTime & CheckOutTime) -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold text-xs text-slate mb-1">Check-In Time</label>
+              <input type="time" class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="checkInTime">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold text-xs text-slate mb-1">Check-Out Time</label>
+              <input type="time" class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="checkOutTime">
+            </div>
+          </div>
+
+          <!-- Status Enum -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Status</label>
+            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="status">
+              <option [ngValue]="null" disabled>Select Status</option>
+              <option [ngValue]="0">Absent</option>
+              <option [ngValue]="1">Present</option>
+              <option [ngValue]="2">Late</option>
+              <option [ngValue]="3">Weekly Off</option>
+              <option [ngValue]="4">Official Holiday</option>
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+            <button type="button" class="btn btn-light rounded-3 px-3 text-xs fw-semibold text-slate" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-orange-main px-4 rounded-3 text-xs fw-semibold" [disabled]="attendanceFormGroup.invalid || isLoading">
+              <span *ngIf="!isLoading">Submit</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              <span *ngIf="isLoading">Submitting...</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:host {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* XTRA Light Footer Container */
+.xtra-footer {
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+/* Color Helpers */
+.text-navy { color: #0f172a !important; }
+.text-orange { color: #ff6b35 !important; }
+.text-slate { color: #64748b !important; }
+.text-xs { font-size: 0.75rem; }
+
+/* Brand Logo Styling */
+.footer-logo-box {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(255, 107, 53, 0.3);
+}
+
+.brand-sub-xtra {
+  color: #94a3b8;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.footer-description {
+  line-height: 1.6;
+  font-size: 0.86rem;
+  color: #64748b;
+}
+
+/* Status Indicator Pill */
+.status-pill {
+  background-color: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.status-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Links & Titles */
+.footer-title {
+  font-size: 0.95rem;
+  letter-spacing: -0.2px;
+}
+
+.footer-nav-links li {
+  margin-bottom: 0.65rem;
+}
+
+.footer-nav-links a {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.footer-nav-links a:hover {
+  color: #ff6b35;
+  transform: translateX(3px);
+}
+
+/* Version Card Styling */
+.version-card-xtra {
+  background-color: #ffffff;
+  border-color: #e2e8f0 !important;
+}
+
+.bg-orange-soft {
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+.tech-badge {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+/* Divider */
+.footer-divider {
+  border-color: #cbd5e1;
+  opacity: 0.6;
+}

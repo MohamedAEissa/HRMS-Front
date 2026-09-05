@@ -1,0 +1,101 @@
+/* Color Palette & Essentials */
+.text-navy { color: #0f172a !important; }
+.text-orange { color: #ff6b35 !important; }
+.text-slate { color: #475569 !important; }
+.bg-orange { background-color: #ff6b35 !important; }
+.bg-slate-50 { background-color: #f8fafc !important; }
+
+.text-xxs { font-size: 0.68rem; }
+.text-xs { font-size: 0.825rem; }
+.text-sm { font-size: 0.875rem; }
+.fw-extrabold { font-weight: 800; }
+.tracking-wider { letter-spacing: 0.05em; }
+
+/* Navbar Main Wrapper - Height Adjustment */
+.navbar-wrapper {
+  min-height: 72px; /* كبرنا طول الـ Header ككل ليعطي ثقل وتوافق */
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 18px -4px rgba(15, 23, 42, 0.05);
+  border-bottom-color: #e2e8f0 !important;
+}
+
+/* Brand Icon & Logo */
+.brand-icon-box {
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.28) !important;
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+/* Navigation Container & Item Padding */
+.nav-menu-wrapper {
+  border-color: #e2e8f0 !important;
+}
+
+.nav-link-item {
+  color: #475569;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap !important;
+}
+
+.nav-link-item:hover {
+  color: #0f172a;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nav-link-item.active {
+  color: #ff6b35 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Create Account Action Button */
+.btn-orange-gradient {
+  background: linear-gradient(135deg, #ff6b35 0%, #e0531e 100%);
+  border: none;
+  height: 40px; /* طول الزر متناسق مع اللوجو */
+  transition: all 0.2s ease;
+}
+
+.btn-orange-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.35) !important;
+  color: #ffffff;
+}
+
+/* User Controls Pill */
+.user-pill-container {
+  border-color: #e2e8f0 !important;
+  height: 40px;
+}
+
+.btn-icon-pill {
+  width: 30px;
+  height: 30px;
+  transition: all 0.2s ease;
+}
+
+.btn-icon-pill:hover {
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+
+.pill-divider {
+  width: 1px;
+  height: 18px;
+  background-color: #cbd5e1;
+}
+
+.dropdown-menu {
+  border: 1px solid #e2e8f0 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+}

@@ -1,0 +1,182 @@
+<section class="employees-wrapper py-4">
+  <div class="container-fluid px-4">
+    
+    <!-- Header & Actions -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold text-navy mb-1">Employees Directory</h3>
+        <p class="text-slate small mb-0">Manage employee records and workforce assignments.</p>
+      </div>
+      <button (click)="openAddModal()" class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#employeeModal">
+        <i class="fa-solid fa-user-plus text-xs"></i>
+        <span>Add Employee</span>
+      </button>
+    </div>
+
+    <!-- Employees Table Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 custom-table">
+            <thead class="bg-light text-uppercase text-slate text-xxs fw-bold border-bottom">
+              <tr>
+                <th class="py-3 ps-4" style="width: 50px;">#</th>
+                <th class="py-3">Employee</th>
+                <th class="py-3">Phone</th>
+                <th class="py-3">Salary</th>
+                <th class="py-3">Department Name</th> 
+                <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employeesList; let i = index" class="smooth-row">
+                <td class="ps-4 text-slate text-xs fw-semibold">{{ i + 1 }}</td>
+                <td>
+                  <!-- تم ضبط الهيكل هنا لمنع أي تداخل -->
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-circle bg-orange-soft text-orange fw-bold text-xs me-3">
+                      {{ emp.fullName ? emp.fullName.substring(0, 2).toUpperCase() : 'EM' }}
+                    </div>
+                    <div class="d-flex flex-column">
+                      <h6 class="mb-0 fw-semibold text-navy text-xs lh-sm">{{emp.fullName}}</h6>
+                      <span class="text-xxs text-slate mt-1">{{emp.email}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-slate text-xs">{{emp.phone}}</td>
+                <td class="fw-semibold text-navy text-xs">{{emp.salary}}</td>
+                <td>
+                  <span class="badge bg-light text-navy border font-monospace text-xxs px-2.5 py-1.5 rounded-2">
+                    {{emp.departmentName}}
+                  </span>
+                </td>
+                <td class="text-end pe-4">
+                  <button (click)="openEditModal(emp)" class="btn btn-icon-smooth text-slate me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#employeeModal">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button (click)="deleteEmployee(emp.id)" class="btn btn-icon-smooth text-danger" title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr> 
+
+              <!-- Empty State -->
+              <tr *ngIf="employeesList?.length === 0">
+                <td colspan="6" class="text-center py-5 text-slate">
+                  <i class="fa-regular fa-folder-open d-block fs-2 mb-2 opacity-50"></i>
+                  <span class="text-xs">No employees found.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal: Add / Edit Employee -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+      <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold text-navy text-sm">{{isEditMode ? 'Edit Employee' : 'Add New Employee'}}</h5>
+        <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+          
+          <!-- FullName -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Full Name</label>
+            <input 
+              formControlName="FullName" 
+              type="text" 
+              class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" 
+              [class.is-invalid]="employeeForm.get('FullName')?.invalid && employeeForm.get('FullName')?.touched"
+              placeholder="e.g. Mohamed Salah"
+            >
+            <div *ngIf="employeeForm.get('FullName')?.invalid && employeeForm.get('FullName')?.touched" class="text-danger text-xxs mt-1">
+              <span *ngIf="employeeForm.get('FullName')?.errors?.['required']">Full name is required.</span>
+              <span *ngIf="employeeForm.get('FullName')?.errors?.['minlength']">Name must be at least 2 characters.</span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Email Address</label>
+            <input 
+              formControlName="Email" 
+              type="email" 
+              class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" 
+              [class.is-invalid]="employeeForm.get('Email')?.invalid && employeeForm.get('Email')?.touched"
+              placeholder="salah@company.com"
+            >
+            <div *ngIf="employeeForm.get('Email')?.invalid && employeeForm.get('Email')?.touched" class="text-danger text-xxs mt-1">
+              <span *ngIf="employeeForm.get('Email')?.errors?.['required']">Email address is required.</span>
+              <span *ngIf="employeeForm.get('Email')?.errors?.['email']">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Phone Number</label>
+            <input 
+              formControlName="Phone" 
+              type="text" 
+              class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" 
+              [class.is-invalid]="employeeForm.get('Phone')?.invalid && employeeForm.get('Phone')?.touched"
+              placeholder="+20 100 000 0000"
+            >
+            <div *ngIf="employeeForm.get('Phone')?.invalid && employeeForm.get('Phone')?.touched" class="text-danger text-xxs mt-1">
+              <span *ngIf="employeeForm.get('Phone')?.errors?.['required']">Phone number is required.</span>
+              <span *ngIf="employeeForm.get('Phone')?.errors?.['minlength']">Phone number must be at least 11 digits.</span>
+            </div>
+          </div>
+
+          <!-- Salary -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Salary</label>
+            <input 
+              formControlName="Salary" 
+              type="number" 
+              class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" 
+              [class.is-invalid]="employeeForm.get('Salary')?.invalid && employeeForm.get('Salary')?.touched"
+              placeholder="e.g. 12000"
+            >
+            <div *ngIf="employeeForm.get('Salary')?.invalid && employeeForm.get('Salary')?.touched" class="text-danger text-xxs mt-1">
+              <span *ngIf="employeeForm.get('Salary')?.errors?.['required']">Salary is required.</span>
+              <span *ngIf="employeeForm.get('Salary')?.errors?.['min']">Salary cannot be negative.</span>
+            </div>
+          </div>
+
+          <!-- DepartmentId (Guid Dropdown) -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Department Name</label>
+            <select 
+              formControlName="DepartmentId" 
+              class="form-select text-xs py-2 bg-light border-light-subtle rounded-3"
+              [class.is-invalid]="employeeForm.get('DepartmentId')?.invalid && employeeForm.get('DepartmentId')?.touched"
+            >
+              <option [ngValue]="null" disabled selected>Select Department</option>
+              <option [value]="department.id" *ngFor="let department of departmentsList">{{department.name}}</option>
+            </select>
+            <div *ngIf="employeeForm.get('DepartmentId')?.invalid && employeeForm.get('DepartmentId')?.touched" class="text-danger text-xxs mt-1">
+              Please select a department.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+            <button type="button" class="btn btn-light rounded-3 px-3 text-xs fw-semibold text-slate" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" [disabled]="employeeForm.invalid || isLoading" class="btn btn-orange-main px-4 rounded-3 text-xs fw-semibold">
+              <span *ngIf="!isLoading">{{isEditMode ? 'Update' : 'Save'}}</span>
+              <span *ngIf="isLoading"><i class="fa-solid fa-spinner fa-spin"></i> Saving...</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

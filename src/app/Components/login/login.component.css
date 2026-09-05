@@ -1,0 +1,45 @@
+/* Container Layout */
+.login-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px; /* العرض المثالي لكارت التسجيل */
+}
+
+.login-icon-box {
+  width: 60px;
+  height: 60px;
+}
+
+/* Colors & Typography */
+.text-navy { color: #0f172a !important; }
+.text-slate { color: #64748b !important; }
+.text-orange { color: #ff6b35 !important; }
+
+.text-xxs { font-size: 0.72rem; }
+.text-xs { font-size: 0.85rem; }
+
+/* Primary Button Style */
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff !important;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-orange-main:hover:not(:disabled) {
+  background-color: #e85a26;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(255, 107, 53, 0.25) !important;
+}
+
+.btn-orange-main:disabled {
+  background-color: #cbd5e1;
+  color: #ffffff !important;
+}
