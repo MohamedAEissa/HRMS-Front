@@ -16,20 +16,19 @@ export class SalaryReportComponent implements OnInit {
 
   salaryReports: SalaryReport[] = [];
   employeeData: Employee[] = []; 
-  departmentsData: string[] = []; // قائمة الأقسام المتاحة
+  departmentsData: string[] = []; 
   isloading: boolean = false;
   editMode: boolean = false;
   selectedReportId: string = '';
   isAdmin: boolean = false;
 
-  // نموذج إضافة / تعديل تقارير المرتبات
+ 
   slaryReportForm: FormGroup = new FormGroup({
     employeeId: new FormControl(null, [Validators.required]),
     month: new FormControl(null, [Validators.required]),
     year: new FormControl(null, [Validators.required]),
   });
 
-  // نموذج الفلترة (القوائم المنسدلة للـ Admin)
   filterForm: FormGroup = new FormGroup({
     employeeName: new FormControl(''),
     departmentName: new FormControl(''),
@@ -59,13 +58,13 @@ export class SalaryReportComponent implements OnInit {
     }
   }
 
-  // جلب بيانات الموظفين واستخراج الأقسام بدون تكرار
+
   getEmployeeData(): void {
     this._EmployeeService.getEmployee().subscribe({
       next: (response) => {
         this.employeeData = response?.data || response || [];
         
-        // تجميع الأقسام الفريدة تلقائياً من قائمة الموظفين
+      
         const depts = this.employeeData
           .map(emp => emp.departmentName)
           .filter((dept): dept is string => !!dept);
@@ -78,7 +77,7 @@ export class SalaryReportComponent implements OnInit {
     });
   }
 
-  // بناء كائن الفلترة
+
   getFilterValues(): SalaryReportFiler {
     const values = this.filterForm.value;
     const filter: SalaryReportFiler = {};

@@ -24,7 +24,7 @@ export class AttendanceComponent implements OnInit {
   
   isAdmin: boolean = false;
 
-  // نموذج الفلترة (يشمل كل الحقول)
+
   filterFormGroup: FormGroup = new FormGroup({
     employeeId: new FormControl(''),
     departmentId: new FormControl(''),
@@ -33,7 +33,7 @@ export class AttendanceComponent implements OnInit {
     date: new FormControl('')
   });
 
-  // نموذج إضافة وتعديل السجلات (خاص بالآدمن/HR)
+ 
   attendanceFormGroup: FormGroup = new FormGroup({
     employeeId: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]), 
@@ -111,7 +111,7 @@ export class AttendanceComponent implements OnInit {
     });
   }
 
-  // تطبيق الفلترة (ترسل كائن AttendanceFilter مباشرة للـ API)
+ 
   applyFilter(): void {
     const rawValues = this.filterFormGroup.value;
     const filter: AttendanceFilter = {};
@@ -136,7 +136,7 @@ export class AttendanceComponent implements OnInit {
     }
   }
 
-  // إعادة التعيين
+
   resetFilter(): void {
     this.filterFormGroup.reset({
       employeeId: '',
