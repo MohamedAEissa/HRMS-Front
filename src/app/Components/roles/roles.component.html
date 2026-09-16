@@ -1,0 +1,139 @@
+<section class="role-wrapper py-4">
+  <div class="container-fluid px-4">
+
+    <!-- Header & Action -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold text-navy mb-1">
+          <i class="fa-solid fa-user-shield text-orange me-2"></i>
+          Role Management
+        </h3>
+        <p class="text-slate small mb-0">Manage system roles, permissions, and creation history.</p>
+      </div>
+      <!-- Fixed: Changed openAddMode() to openAddModal() -->
+      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" 
+              data-bs-toggle="modal" 
+              data-bs-target="#addRoleModal" 
+              (click)="openAddModal()">
+        <i class="fa-solid fa-plus text-xs"></i>
+        <span>Add Role</span>
+      </button>
+    </div>
+
+    <!-- Official Roles Table Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 custom-table">
+            <thead class="bg-light text-uppercase text-slate text-xxs fw-bold border-bottom">
+              <tr>
+                <th class="py-3 ps-4" style="width: 60px;">#</th>
+                <th class="py-3">Role Name</th>
+                <th class="py-3">Description</th>   
+                <th class="py-3">Created At</th>    
+                <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- Dynamic Rows -->
+              <tr class="smooth-row" *ngFor="let role of roleList; let i = index">
+                <td class="ps-4 text-slate text-xs fw-semibold">{{ i + 1 }}</td>
+
+                <td>
+                  <span class="badge bg-light text-navy border text-xxs px-2.5 py-1.5 rounded-2 font-monospace fw-semibold">
+                    {{ role.roleName }}
+                  </span>
+                </td>
+
+                <td>
+                  <p class="mb-0 text-slate text-xs">{{ role.description }}</p>
+                </td>
+
+                <td>
+                  <span class="text-slate text-xs font-monospace">
+                    <i class="fa-regular fa-clock me-1 opacity-75"></i>
+                    {{ role.createdAt | date:'yyyy/MM/dd hh:mm a' }}
+                  </span>
+                </td>
+
+                <td class="text-end pe-4"> 
+                  <button (click)="openEditMode(role)" 
+                          class="btn btn-icon-smooth text-slate me-1" 
+                          title="Edit Role" 
+                          data-bs-toggle="modal" 
+                          data-bs-target="#addRoleModal">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button (click)="deleteRole(role.id)" class="btn btn-icon-smooth text-danger" title="Delete Role">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Empty State -->
+              <tr *ngIf="roleList?.length === 0">
+                <td colspan="5" class="text-center py-5 text-slate">
+                  <i class="fa-regular fa-folder-open fs-2 mb-2 opacity-50 d-block"></i>
+                  <span class="text-xs">No roles created yet.</span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal: Add / Edit Role -->
+<div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+      <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+        <div>
+          <h5 class="modal-title fw-bold text-navy text-sm mb-1">
+            {{ isEditMode ? 'Edit Role' : 'Add New Role' }}
+          </h5>
+          <p class="text-slate text-xs mb-0">Fill in the role details below</p>
+        </div>
+        <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form [formGroup]="roleFormGroup" (ngSubmit)="saveRole()">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Role Name</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-light-subtle text-slate text-xs">
+                <i class="fa-solid fa-shield-halved"></i>
+              </span>
+              <input type="text" formControlName="roleName" class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" placeholder="e.g., Technical_Lead">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Description</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-light-subtle text-slate text-xs">
+                <i class="fa-solid fa-align-left"></i>
+              </span>
+              <textarea formControlName="description" class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" rows="3" placeholder="Brief explanation of permissions..."></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+            <button type="button" class="btn btn-light rounded-3 px-3 text-xs fw-semibold text-slate" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" [disabled]="roleFormGroup.invalid || isLoading" class="btn btn-orange-main px-4 rounded-3 text-xs fw-semibold">
+              <span *ngIf="!isLoading">{{ isEditMode ? 'Update Role' : 'Save Role' }}</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,23 @@ import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service'
   styleUrls: ['./nav-blank.component.css']
 })
 export class NavBlankComponent {
-constructor(private _AuthService:AuthServiceService){}
-   logOutUser():void{
-      this._AuthService.logOut();
+
+  constructor(private _AuthService: AuthServiceService) {}
+
+
+  isAdminOrHR(): boolean {
+    const role = this._AuthService.getUserRole();
+    return role === 'Admin' || role === 'HR';
   }
+
+  isEmployee(): boolean {
+    const role = this._AuthService.getUserRole();
+    return role === 'Employee';
+  }
+
+  // 3. تسجيل الخروج
+  logOutUser(): void {
+    this._AuthService.logOut();
+  }
+
 }

@@ -1,0 +1,96 @@
+/* Color Palette Variables */
+:host {
+  --navy-dark: #0f172a;
+  --navy-slate: #1e293b;
+  --orange-primary: #f97316;
+  --orange-accent: #fb923c;
+  --orange-soft: rgba(249, 115, 22, 0.1);
+}
+
+/* Typography & Helpers */
+.text-xxs { font-size: 0.725rem; }
+.text-xs { font-size: 0.825rem; }
+.fs-7 { font-size: 0.75rem; }
+.tracking-wider { letter-spacing: 0.05em; }
+.text-orange { color: var(--orange-primary) !important; }
+.text-orange-accent { color: var(--orange-accent) !important; }
+.bg-orange-soft { background-color: var(--orange-soft) !important; }
+
+/* 1. Hero Card Styles */
+.profile-hero-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--orange-primary), #ea580c);
+}
+
+.role-pill {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.bg-white-10 {
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+
+/* 2. Feature Cards Hover Effects */
+.feature-card {
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-shape {
+  width: 48px;
+  height: 48px;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(249, 115, 22, 0.3);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+}
+
+.feature-card:hover .icon-arrow {
+  transform: translateX(6px);
+}
+
+.icon-arrow {
+  transition: transform 0.2s ease;
+}
+
+/* 3. Action Tiles */
+.action-tile {
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tile-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.action-tile:hover {
+  border-color: var(--orange-primary);
+  background-color: #fafafa;
+}
+
+.action-tile:hover .tile-arrow {
+  color: var(--orange-primary) !important;
+  transform: translateX(3px);
+}
+
+.tile-arrow {
+  transition: all 0.2s ease;
+}

@@ -1,0 +1,61 @@
+/* Clean & Soft Color Palette */
+:root {
+  --navy-slate: #1e293b;         /* Dark Slate for Headings & Paragraphs */
+  --orange-primary: #f97316;     /* Main Vibrant Orange */
+  --orange-light: #fff7ed;       /* Light Orange Background */
+}
+
+/* Override default link (a) colors */
+a.action-card {
+  text-decoration: none !important;
+  color: var(--navy-slate) !important;
+}
+
+/* Explicitly force dark text on header and paragraph inside cards */
+.action-card h5 {
+  color: var(--navy-slate) !important;
+}
+
+.action-card p {
+  color: #475569 !important; /* Slate color for paragraph */
+}
+
+/* Force orange color on footer link and arrow */
+.action-card .card-footer-link,
+.action-card .card-footer-link span,
+.action-card .card-footer-link i {
+  color: var(--orange-primary) !important;
+}
+
+/* Card Styling */
+.icon-box {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-orange-light { 
+  background-color: var(--orange-light) !important; 
+}
+
+.border-light-orange { 
+  border: 1px solid #fed7aa !important; 
+}
+
+.action-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  border-color: #fdba74 !important;
+  box-shadow: 0 12px 24px rgba(249, 115, 22, 0.08) !important;
+}
+
+.action-card:hover .card-footer-link i {
+  transform: translateX(4px);
+  transition: transform 0.2s ease;
+}

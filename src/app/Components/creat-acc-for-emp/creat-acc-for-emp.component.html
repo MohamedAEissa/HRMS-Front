@@ -30,27 +30,31 @@
                 </div>
               </div>
 
-              <!-- Email Field -->
+              <!-- Employee Field (Selects Email) -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-xs text-slate mb-1">Employee Email</label>
+                <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
                 <div class="input-group">
                   <span class="input-group-text bg-light border-light-subtle text-slate text-xs border-end-0">
-                    <i class="fa-solid fa-envelope"></i>
+                    <i class="fa-solid fa-user"></i>
                   </span>
-                  <input 
+                  <select 
                     formControlName="email" 
-                    type="email" 
-                    class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                    class="form-select text-xs py-2 bg-light border-light-subtle rounded-end-3"
                     [class.is-invalid]="createAcc.get('email')?.invalid && createAcc.get('email')?.touched"
-                    placeholder="e.g. salah@company.com">
+                  >
+                    <option [ngValue]="null" disabled selected>Select Employee</option>
+                    <option *ngFor="let emp of empList" [value]="emp.email">
+                      {{ emp.fullName }} ({{ emp.email }})
+                    </option>
+                  </select>
                 </div>
                 <div *ngIf="createAcc.get('email')?.invalid && createAcc.get('email')?.touched" class="text-danger text-xxs mt-1">
-                  <span *ngIf="createAcc.get('email')?.errors?.['required']">Email is required.</span>
-                  <span *ngIf="createAcc.get('email')?.errors?.['email']">Enter a valid email address.</span>
+                  <span *ngIf="createAcc.get('email')?.errors?.['required']">Employee selection is required.</span>
+                  <span *ngIf="createAcc.get('email')?.errors?.['email']">Please select a valid employee email.</span>
                 </div>
               </div>
 
-              <!-- Role Field -->
+              <!-- Role Field (Sends Role Name) -->
               <div class="mb-3">
                 <label class="form-label fw-semibold text-xs text-slate mb-1">User Role</label>
                 <div class="input-group">
@@ -62,10 +66,11 @@
                     class="form-select text-xs py-2 bg-light border-light-subtle rounded-end-3"
                     [class.is-invalid]="createAcc.get('role')?.invalid && createAcc.get('role')?.touched"
                   >
-                    <option value="" disabled>Select Role</option>
-                    <option value="Employee">Employee</option>
-                    <option value="HR">HR Specialist</option>
-                    <option value="Admin">System Admin</option>
+                    <option [ngValue]="null" disabled selected>Select Role</option>
+                    <!-- إرسال roleName بدلاً من id لأن Backend يستخدم RoleExistsAsync(dto.Role) -->
+                    <option *ngFor="let roleItem of roleList" [value]="roleItem.roleName">
+                      {{ roleItem.roleName }}
+                    </option>
                   </select>
                 </div>
                 <div *ngIf="createAcc.get('role')?.invalid && createAcc.get('role')?.touched" class="text-danger text-xxs mt-1">
@@ -105,12 +110,11 @@
                       formControlName="confirmPassword" 
                       type="password" 
                       class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
-                      [class.is-invalid]="(createAcc.get('confirmPassword')?.invalid || createAcc.errors?.['passwordMismatch']) && createAcc.get('confirmPassword')?.touched"
+                      [class.is-invalid]="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched"
                       placeholder="Re-enter the password">
                   </div>
-                  <div *ngIf="createAcc.get('confirmPassword')?.touched" class="text-danger text-xxs mt-1">
+                  <div *ngIf="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched" class="text-danger text-xxs mt-1">
                     <span *ngIf="createAcc.get('confirmPassword')?.errors?.['required']">Confirm password is required.</span>
-                    <span *ngIf="createAcc.errors?.['passwordMismatch'] && !createAcc.get('confirmPassword')?.errors?.['required']">Passwords do not match.</span>
                   </div>
                 </div>
               </div>

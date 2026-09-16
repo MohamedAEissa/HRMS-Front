@@ -1,0 +1,188 @@
+<section class="home-wrapper py-5" *ngIf="currentEmp">
+  <div class="container px-4">
+    
+    <!-- SECTION 1: Modern Premium Profile Header -->
+    <div class="profile-hero-card p-4 p-md-5 rounded-4 mb-5 position-relative overflow-hidden shadow-lg">
+      <div class="hero-bg-overlay"></div>
+      <div class="row align-items-center g-4 position-relative z-1">
+        
+        <!-- Avatar & Main Details -->
+        <div class="col-lg-7 d-flex align-items-center gap-4">
+          <div class="avatar-wrapper position-relative">
+            <div class="avatar-circle rounded-circle d-flex align-items-center justify-content-center text-white fw-bold fs-3 shadow">
+              {{ currentEmp.fullName ? currentEmp.fullName.substring(0, 2).toUpperCase() : 'ME' }}
+            </div>
+            <span class="status-indicator position-absolute bottom-0 end-0 p-2 rounded-circle border border-2 border-white"
+                  [ngClass]="currentEmp.isActive ? 'bg-success' : 'bg-danger'">
+            </span>
+          </div>
+          
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+              <h3 class="fw-bold mb-0 text-white me-2">{{ currentEmp.fullName }}</h3>
+              <span class="badge role-pill px-3 py-1 text-xs rounded-pill">
+                {{ currentEmp.roleName }}
+              </span>
+            </div>
+            
+            <p class="text-white-50 text-sm mb-0 d-flex align-items-center gap-2">
+              <i class="fa-solid fa-building text-orange-accent"></i>
+              <span>{{ currentEmp.departmentName }}</span>
+              <span class="opacity-50">•</span>
+              <i class="fa-solid fa-envelope text-orange-accent"></i>
+              <span>{{ currentEmp.email }}</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Metrics -->
+        <div class="col-lg-5">
+          <div class="metrics-grid rounded-3 p-3 bg-white-10 backdrop-blur d-flex justify-content-around text-center">
+            <div class="px-2">
+              <span class="text-xs text-white-50 text-uppercase d-block fw-semibold tracking-wider">Employee ID</span>
+              <span class="fw-bold fs-6 text-white" [title]="currentEmp.id">
+                #{{ currentEmp.id ? currentEmp.id.substring(0, 8) : 'N/A' }}
+              </span>
+            </div>
+            <div class="vr bg-white opacity-25"></div>
+            <div class="px-2">
+              <span class="text-xs text-white-50 text-uppercase d-block fw-semibold tracking-wider">Base Salary</span>
+              <span class="fw-bold fs-6 text-orange-accent">
+                {{ currentEmp.salary | currency:'EGP':'symbol':'1.0-0' }}
+              </span>
+            </div>
+            <div class="vr bg-white opacity-25"></div>
+            <div class="px-2">
+              <span class="text-xs text-white-50 text-uppercase d-block fw-semibold tracking-wider">Joined</span>
+              <span class="fw-bold fs-6 text-white">
+                {{ currentEmp.createdAt | date:'MMM yyyy' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 2: Interactive Module Cards -->
+    <div class="mb-5">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="fw-bold text-uppercase tracking-wider text-muted fs-7 mb-0">Core Modules</h6>
+        <span class="line-divider flex-grow-1 ms-3 bg-light opacity-50" style="height: 1px;"></span>
+      </div>
+
+      <div class="row g-4">
+        
+        <!-- Attendance Card -->
+        <div class="col-lg-4 col-md-6">
+          <a routerLink="/my-attendance" class="feature-card p-4 rounded-4 bg-white text-decoration-none d-flex flex-column justify-content-between h-100 shadow-sm">
+            <div>
+              <div class="icon-shape bg-orange-soft text-orange rounded-3 mb-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-calendar-check fs-5"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-2">My Attendance</h5>
+              <p class="text-muted text-xs mb-0">Track daily check-ins, working hours, and view full monthly attendance logs.</p>
+            </div>
+            <div class="card-link fw-semibold text-xs mt-4 d-flex align-items-center justify-content-between text-orange">
+              <span>View Attendance Log</span>
+              <i class="fa-solid fa-arrow-right icon-arrow"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Salary Card -->
+        <div class="col-lg-4 col-md-6">
+          <a routerLink="/my-payslips" class="feature-card p-4 rounded-4 bg-white text-decoration-none d-flex flex-column justify-content-between h-100 shadow-sm">
+            <div>
+              <div class="icon-shape bg-orange-soft text-orange rounded-3 mb-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-file-invoice-dollar fs-5"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-2">My Salary & Payslips</h5>
+              <p class="text-muted text-xs mb-0">Review monthly payslips, allowances breakdown, and tax deductions clearly.</p>
+            </div>
+            <div class="card-link fw-semibold text-xs mt-4 d-flex align-items-center justify-content-between text-orange">
+              <span>View Salary Details</span>
+              <i class="fa-solid fa-arrow-right icon-arrow"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Leaves Card -->
+        <div class="col-lg-4 col-md-12">
+          <a routerLink="/my-leaves" class="feature-card p-4 rounded-4 bg-white text-decoration-none d-flex flex-column justify-content-between h-100 shadow-sm">
+            <div>
+              <div class="icon-shape bg-orange-soft text-orange rounded-3 mb-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-plane-departure fs-5"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-2">Vacations & Leaves</h5>
+              <p class="text-muted text-xs mb-0">Check remaining vacation balance, request new leaves, and track status.</p>
+            </div>
+            <div class="card-link fw-semibold text-xs mt-4 d-flex align-items-center justify-content-between text-orange">
+              <span>Manage Vacations</span>
+              <i class="fa-solid fa-arrow-right icon-arrow"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 3: Quick Action Tiles -->
+    <div>
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="fw-bold text-uppercase tracking-wider text-muted fs-7 mb-0">Quick Actions</h6>
+        <span class="line-divider flex-grow-1 ms-3 bg-light opacity-50" style="height: 1px;"></span>
+      </div>
+
+      <div class="row g-3">
+        
+        <div class="col-md-4">
+          <div class="action-tile p-3 rounded-4 bg-white shadow-sm d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <div class="tile-icon bg-light rounded-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-pen-to-square text-orange"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-0 fs-6">Request Vacation</h6>
+                <span class="text-muted text-xxs">Apply for new leave</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted tile-arrow"></i>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="action-tile p-3 rounded-4 bg-white shadow-sm d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <div class="tile-icon bg-light rounded-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-download text-orange"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-0 fs-6">Download Payslip</h6>
+                <span class="text-muted text-xxs">Get current month PDF</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted tile-arrow"></i>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="action-tile p-3 rounded-4 bg-white shadow-sm d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <div class="tile-icon bg-light rounded-3 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-user-pen text-orange"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-0 fs-6">Update Profile</h6>
+                <span class="text-muted text-xxs">Edit personal details</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted tile-arrow"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

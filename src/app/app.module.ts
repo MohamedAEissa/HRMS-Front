@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './Components/home/home.component';
+import { adminHomeComponent } from './Components/admin-home/admin-home.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { LoginComponent } from './Components/login/login.component';
 import { CreatAccForEmpComponent } from './Components/creat-acc-for-emp/creat-acc-for-emp.component';
@@ -21,11 +21,15 @@ import { AttendanceComponent } from './Components/attendance/attendance.componen
 import { OfficialHolidayComponent } from './Components/official-holiday/official-holiday.component';
 import { SalaryReportComponent } from './Components/salary-report/salary-report.component';
 import { JwtInterceptor } from './Shared/jwt.interceptor';
+import { AccountMangementComponent } from './Components/account-mangement/account-mangement.component';
+import { RolesComponent } from './Components/roles/roles.component';
+import { LandingPageComponent } from './Components/landing-page/landing-page.component';
+import { EmployeeHomeComponent } from './Components/employee-home/employee-home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    adminHomeComponent,
     FooterComponent,
     LoginComponent,
     CreatAccForEmpComponent,
@@ -39,7 +43,11 @@ import { JwtInterceptor } from './Shared/jwt.interceptor';
     GeneralsettingComponent,
     AttendanceComponent,
     OfficialHolidayComponent,
-    SalaryReportComponent
+    SalaryReportComponent,
+    AccountMangementComponent,
+    RolesComponent,
+    LandingPageComponent,
+    EmployeeHomeComponent
   ],
   imports: [
     BrowserModule,

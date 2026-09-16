@@ -1,0 +1,150 @@
+<div class="landing-wrapper d-flex flex-column justify-content-between">
+  
+  <!-- Navbar -->
+  <header class="navbar bg-white border-bottom py-3 px-lg-5 px-4 sticky-top shadow-sm">
+    <div class="container-fluid p-0 d-flex align-items-center justify-content-between">
+      
+      <a routerLink="/" class="navbar-brand d-flex align-items-center gap-3 m-0 text-decoration-none">
+        <div class="brand-icon-box shadow-sm">
+          <i class="fa-solid fa-bolt fs-5"></i>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="brand-title lh-1">HRMS<span class="text-orange">.</span></span>
+          <span class="brand-subtitle fw-bold">BUSINESS SUITE</span>
+        </div>
+      </a>
+
+      <a routerLink="/login" class="btn btn-orange-main shadow-sm d-flex align-items-center gap-2">
+        <span>Sign In</span>
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="container my-auto py-5">
+    
+    <!-- TOP HERO ROW -->
+    <div class="row align-items-center g-5 mb-5 pb-lg-4">
+      <div class="col-lg-6">
+        <div class="d-inline-flex align-items-center gap-2 badge-orange-pill mb-3">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Portfolio & Enterprise Architecture Showcase</span>
+        </div>
+        
+        <h1 class="display-5 hero-title mb-3">
+          Modern Workforce & Payroll Management Platform
+        </h1>
+        
+        <p class="text-slate-custom mb-4">
+          A full-stack enterprise web application built to master scalable system design, Clean Architecture principles, automated salary processing, and secure RBAC authorization.
+        </p>
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <a routerLink="/login" class="btn btn-navy-main shadow-sm d-inline-flex align-items-center gap-2">
+            <span>Access Portal</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6 text-center">
+        <div class="hero-card-right p-4 p-lg-5">
+          <div class="hero-icon-box mx-auto mb-3">
+            <i class="fa-solid fa-cubes-stacked fs-1"></i>
+          </div>
+          <h5 class="fw-bold text-navy mt-3 mb-1">HRMS Pro Business Suite</h5>
+          <p class="text-slate-custom fs-6 mb-0">Engineered with ASP.NET Core Web API & Angular</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH STACK & ARCHITECTURE SECTION (القسم الجديد) -->
+    <div class="tech-showcase-wrapper pt-4">
+      <div class="text-center mb-5">
+        <span class="text-orange fw-bold text-uppercase fs-7 tracking-wider">UNDER THE HOOD</span>
+        <h2 class="fw-extrabold text-navy mt-1">System Architecture & Tech Stack</h2>
+        <p class="text-slate-custom max-w-600 mx-auto">
+          Built from the ground up using industry-standard design patterns and modern web technologies.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Backend Tech Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="tech-card p-4 h-100 bg-white border rounded-4 shadow-sm">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="tech-icon-box bg-purple-soft text-purple rounded-3">
+                <i class="fa-solid fa-server fs-4"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold text-navy mb-0">Backend Core</h5>
+                <span class="fs-7 text-slate-custom">ASP.NET Core Web API</span>
+              </div>
+            </div>
+            <ul class="tech-list list-unstyled mb-0 border-top pt-3 text-slate-custom fs-6">
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>C# & .NET 8</strong> RESTful Endpoints</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Clean Architecture</strong> (Separation of Concerns)</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>MediatR</strong> (CQRS Pattern Implementation)</li>
+              <li><i class="fa-solid fa-check text-emerald me-2"></i> <strong>EF Core & LINQ</strong> Data Management</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Frontend Tech Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="tech-card p-4 h-100 bg-white border rounded-4 shadow-sm">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="tech-icon-box bg-cyan-soft text-cyan rounded-3">
+                <i class="fa-solid fa-code fs-4"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold text-navy mb-0">Frontend Framework</h5>
+                <span class="fs-7 text-slate-custom">Angular Suite</span>
+              </div>
+            </div>
+            <ul class="tech-list list-unstyled mb-0 border-top pt-3 text-slate-custom fs-6">
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>TypeScript & Angular</strong> Single-Page App</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Reactive Forms</strong> with Validation</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>RxJS Observables</strong> Async Data Flow</li>
+              <li><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Bootstrap 5</strong> Responsive UI Systems</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Security & Business Logic Card -->
+        <div class="col-lg-4 col-md-12">
+          <div class="tech-card p-4 h-100 bg-white border rounded-4 shadow-sm">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="tech-icon-box bg-emerald-soft text-emerald rounded-3">
+                <i class="fa-solid fa-shield-cat fs-4"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold text-navy mb-0">Security & Core Logic</h5>
+                <span class="fs-7 text-slate-custom">Authentication & Business Rules</span>
+              </div>
+            </div>
+            <ul class="tech-list list-unstyled mb-0 border-top pt-3 text-slate-custom fs-6">
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>JWT Bearer Authentication</strong> Token Claims</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Role-Based Access Control</strong> (Admin vs Employee)</li>
+              <li class="mb-2"><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Automated Payroll Engine</strong> Overtime & Deductions</li>
+              <li><i class="fa-solid fa-check text-emerald me-2"></i> <strong>Scalar / OpenAPI</strong> API Documentation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-top py-3 text-center mt-5">
+    <div class="container">
+      <span class="text-slate-custom fs-6 fw-semibold">
+        © 2026 HRMS Pro. Designed & Developed by Mohamed Eissa.
+      </span>
+    </div>
+  </footer>
+
+</div>

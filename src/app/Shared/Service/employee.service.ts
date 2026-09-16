@@ -25,4 +25,8 @@ export class EmployeeService {
   updateEmployee(id:string,body:Employee):Observable<any>{
     return this._HttpClient.put(`https://localhost:7126/api/employees/${id}`,body)
   }
+
+  getMyData():Observable<any>{
+    return  this._HttpClient.get(`https://localhost:7126/api/employees/me`)
+  }
 }

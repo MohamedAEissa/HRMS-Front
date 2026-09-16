@@ -6,4 +6,7 @@ export interface Employee {
   salary: number
   departmentId: string
   departmentName: string
+  roleName: string
+  isActive: boolean
+  createdAt: string
 }

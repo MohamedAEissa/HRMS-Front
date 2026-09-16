@@ -1,0 +1,82 @@
+/* Color Palette */
+.text-navy { color: #0f172a !important; }
+.text-slate { color: #64748b !important; }
+.text-orange { color: #ff6b35 !important; }
+
+/* Font Sizing */
+.text-xxs { font-size: 0.72rem; }
+.text-xs { font-size: 0.8125rem; }
+.text-sm { font-size: 0.95rem; }
+
+/* Main Action Button */
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff !important;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-orange-main:hover:not(:disabled) {
+  background-color: #e85a26;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
+}
+
+.btn-orange-main:disabled {
+  background-color: #cbd5e1;
+  color: #ffffff !important;
+}
+
+/* Action Icon Buttons */
+.btn-icon-smooth {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-icon-smooth.text-slate:hover {
+  background-color: #f1f5f9;
+  color: #0f172a !important;
+}
+
+.btn-icon-smooth.text-danger:hover {
+  background-color: #fee2e2;
+  color: #dc2626 !important;
+}
+
+/* Custom Table Layout */
+.custom-table thead th {
+  background-color: #f8fafc;
+  letter-spacing: 0.5px;
+}
+
+.smooth-row {
+  transition: background-color 0.15s ease;
+}
+
+.smooth-row:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Form Controls Focus */
+.form-control:focus {
+  border-color: #ff6b35 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.15) !important;
+}
+
+.input-group-text {
+  border-right: none;
+}
+
+.input-group .form-control {
+  border-left: none;
+}

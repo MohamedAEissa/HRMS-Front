@@ -25,7 +25,7 @@ constructor(private _OfficialHolidaysService: OfficialHolidaysService) { }
     this._OfficialHolidaysService.getOfficialHolidays().subscribe({
       next:(res)=>{
         this.holidaysList = res.data;
-        console.log(this.holidaysList);
+       
       },
       error:(err)=>{
         console.log(err);

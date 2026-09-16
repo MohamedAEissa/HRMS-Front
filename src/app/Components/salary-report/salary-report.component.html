@@ -7,11 +7,82 @@
         <h3 class="fw-bold text-navy mb-1">Payroll & Salary Reports</h3>
         <p class="text-slate small mb-0">Calculate monthly employee net salaries based on attendance, overtime, and deductions.</p>
       </div>
-      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#SalaryReportModal" (click)="openCreateModal()">
+
+      <!-- Generate Button -->
+      <button *ngIf="isAdmin" class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#SalaryReportModal" (click)="openCreateModal()">
         <i class="fa-solid fa-file-invoice-dollar text-xs"></i>
         <span>Generate Report</span>
       </button>
-    </div>  
+    </div>   
+
+    <!-- Filter Card -->
+    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 border">
+      <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+        <div class="row g-3 align-items-end">
+          
+          <!-- Employee Select Dropdown (Admin Only) -->
+          <div *ngIf="isAdmin" class="col-md-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
+            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="employeeName">
+              <option value="">All Employees</option>
+              <option *ngFor="let emp of employeeData" [value]="emp.fullName">
+                {{ emp.fullName }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Department Select Dropdown (Admin Only) -->
+          <div *ngIf="isAdmin" class="col-md-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Department</label>
+            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="departmentName">
+              <option value="">All Departments</option>
+              <option *ngFor="let dept of departmentsData" [value]="dept">
+                {{ dept }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Month Filter -->
+          <div [ngClass]="isAdmin ? 'col-md-2' : 'col-md-4'">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Month</label>
+            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="month">
+              <option [ngValue]="null">All Months</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+
+          <!-- Year Filter -->
+          <div [ngClass]="isAdmin ? 'col-md-2' : 'col-md-4'">
+            <label class="form-label fw-semibold text-xs text-slate mb-1">Year</label>
+            <input type="number" class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" placeholder="e.g. 2026" formControlName="year">
+          </div>
+
+          <!-- Action Buttons (Filter & Reset) -->
+          <div [ngClass]="isAdmin ? 'col-md-2' : 'col-md-4'" class="d-flex gap-2">
+            <button type="submit" class="btn btn-orange-main text-xs py-2 w-100 rounded-3 fw-semibold shadow-sm">
+              <i class="fa-solid fa-filter text-xs"></i>
+              
+            </button>
+            <button type="button" class="btn btn-light rounded-3 px-3 py-2 text-xs fw-semibold text-slate w-100 d-flex align-items-center justify-content-center gap-1" (click)="resetFilter()">
+              <i class="fa-solid fa-rotate-right text-xs"></i>
+              <span>Reset</span>
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
 
     <!-- Salary Reports Table Card -->
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
@@ -21,21 +92,21 @@
             <thead class="bg-light text-uppercase text-slate text-xxs fw-bold border-bottom">
               <tr>
                 <th class="py-3 ps-4" style="width: 50px;">#</th>
-                <th class="py-3">Employee</th>
+                <th *ngIf="isAdmin" class="py-3">Employee</th>
                 <th class="py-3">Period</th>
                 <th class="py-3">Basic Salary</th>
                 <th class="py-3">Attendance</th>
                 <th class="py-3">Absence</th>
                 <th class="py-3">Overtime (Hrs / $)</th>
-                <th class="py-3">Deductions (Hrs / $)</th>
+                <th class="py-3">Deductions (Hrs / Days)</th>
                 <th class="py-3">Net Salary</th>
-                <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
+                <th *ngIf="isAdmin" class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let report of salaryReports; let i = index" class="smooth-row">
                 <td class="ps-4 text-slate text-xs fw-semibold">{{ i + 1 }}</td>
-                <td>
+                <td *ngIf="isAdmin">
                   <div class="d-flex flex-column">
                     <h6 class="mb-0 fw-semibold text-navy text-xs">{{ report.employeeName }}</h6>
                     <span class="text-xxs text-slate mt-0.5">{{ report.departmentName }}</span>
@@ -55,10 +126,12 @@
                 </td>
                 <td>
                   <div class="text-xs fw-semibold text-slate">{{ report.totalDeductionHours }} hrs</div>
+                  <div class="text-xxs text-danger">- {{ report.absenceDays }} absenceDays</div>
                   <div class="text-xxs text-danger">-{{ report.totalDeductionAmount | currency }}</div>
                 </td>
                 <td><span class="fw-bold text-orange text-xs">{{ report.netSalary | currency }}</span></td>
-                <td class="text-end pe-4"> 
+                
+                <td *ngIf="isAdmin" class="text-end pe-4"> 
                   <button (click)="openEditModal(report)" class="btn btn-icon-smooth text-slate me-1" title="Edit Report" data-bs-toggle="modal" data-bs-target="#SalaryReportModal">
                     <i class="fa-solid fa-pen"></i>
                   </button>
@@ -69,10 +142,18 @@
               </tr>
 
               <!-- Empty State -->
-              <tr *ngIf="salaryReports?.length === 0">
-                <td colspan="10" class="text-center py-5 text-slate">
+              <tr *ngIf="!isloading && salaryReports?.length === 0">
+                <td [attr.colspan]="isAdmin ? 10 : 9" class="text-center py-5 text-slate">
                   <i class="fa-regular fa-folder-open d-block fs-2 mb-2 opacity-50"></i>
                   <span class="text-xs">No salary reports found.</span>
+                </td>
+              </tr>
+
+              <!-- Loading State -->
+              <tr *ngIf="isloading">
+                <td [attr.colspan]="isAdmin ? 10 : 9" class="text-center py-5 text-slate">
+                  <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                  <span class="text-xs">Loading salary reports...</span>
                 </td>
               </tr>
             </tbody>
@@ -85,7 +166,7 @@
 </section>
 
 <!-- Modal: Generate / Edit Salary Report -->
-<div class="modal fade" id="SalaryReportModal" tabindex="-1" aria-hidden="true">
+<div *ngIf="isAdmin" class="modal fade" id="SalaryReportModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
       <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
@@ -95,7 +176,6 @@
       <div class="modal-body p-4">
         <form [formGroup]="slaryReportForm" (ngSubmit)="submitForm()">
           
-          <!-- Employee Selection -->
           <div class="mb-3">
             <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
             <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="employeeId">
@@ -106,7 +186,6 @@
             </select>
           </div>
 
-          <!-- Month & Year Row -->
           <div class="row g-3 mb-3">
             <div class="col-md-6">
               <label class="form-label fw-semibold text-xs text-slate mb-1">Month</label>

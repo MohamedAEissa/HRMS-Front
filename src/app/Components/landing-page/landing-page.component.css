@@ -1,0 +1,158 @@
+/* Container Layout */
+.landing-wrapper {
+  background-color: #f8fafc !important;
+  min-height: 100vh;
+}
+
+/* Header & Brand */
+.brand-icon-box {
+  width: 40px;
+  height: 40px;
+  background-color: #f97316 !important;
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.brand-title {
+  color: #0f172a !important;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.brand-subtitle {
+  color: #64748b !important;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+}
+
+/* Badges & Pills */
+.badge-orange-pill {
+  background-color: #fff7ed !important;
+  color: #ea580c !important;
+  border: 1px solid #ffedd5 !important;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Typography */
+.hero-title {
+  color: #0f172a !important;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.text-navy {
+  color: #0f172a !important;
+}
+
+.text-orange {
+  color: #f97316 !important;
+}
+
+.text-slate-custom {
+  color: #64748b !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.text-emerald {
+  color: #10b981 !important;
+}
+
+.text-purple {
+  color: #8b5cf6 !important;
+}
+
+.text-cyan {
+  color: #06b6d4 !important;
+}
+
+.fs-7 {
+  font-size: 0.75rem !important;
+}
+
+/* Buttons */
+.btn-orange-main {
+  background-color: #f97316 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s ease;
+}
+
+.btn-orange-main:hover {
+  background-color: #ea580c !important;
+  color: #ffffff !important;
+}
+
+.btn-navy-main {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  padding: 12px 28px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s ease;
+}
+
+.btn-navy-main:hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+/* Hero Box Right */
+.hero-card-right {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+.hero-icon-box {
+  width: 80px;
+  height: 80px;
+  background-color: #fff7ed !important;
+  color: #f97316 !important;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tech Showcase Cards */
+.tech-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.tech-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08) !important;
+}
+
+.tech-icon-box {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-purple-soft { background-color: #f5f3ff !important; }
+.bg-cyan-soft { background-color: #ecfeff !important; }
+.bg-emerald-soft { background-color: #ecfdf5 !important; }
+
+.tech-list li {
+  font-size: 0.875rem;
+}
+
+.max-w-600 {
+  max-width: 600px;
+}
