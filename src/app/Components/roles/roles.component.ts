@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Roles } from 'src/app/Shared/interface/roles';
-import { RolesService } from 'src/app/Shared/Service/roles.service';
+import { Roles } from 'src/app/shared/interface/roles';
+import { RolesService } from 'src/app/shared/service/roles.service';
 
 @Component({
   selector: 'app-roles',

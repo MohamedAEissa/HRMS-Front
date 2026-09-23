@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Attendance } from 'src/app/Shared/interface/attendance';
-import { AttendanceFilter } from 'src/app/Shared/interface/attendance-filter';
-import { Employee } from 'src/app/Shared/interface/employee';
-import { Department } from 'src/app/Shared/interface/department';
-import { AttendanceService } from 'src/app/Shared/Service/attendance.service';
-import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
-import { EmployeeService } from 'src/app/Shared/Service/employee.service';
-import { DepatrmentsService } from 'src/app/Shared/Service/depatrments.service';
+import { Attendance } from 'src/app/shared/interface/attendance';
+import { AttendanceFilter } from 'src/app/shared/interface/attendance-filter';
+import { Employee } from 'src/app/shared/interface/employee';
+import { Department } from 'src/app/shared/interface/department';
+import { AttendanceService } from 'src/app/shared/service/attendance.service';
+import { AuthServiceService } from 'src/app/shared/service/auth-service.service';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
+import { DepatrmentsService } from 'src/app/shared/service/depatrments.service';
 import Swal from 'sweetalert2';
 
 @Component({

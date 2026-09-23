@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Account } from 'src/app/Shared/interface/account';
-import { Roles } from 'src/app/Shared/interface/roles';
-import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
-import { RolesService } from 'src/app/Shared/Service/roles.service';
+import { Account } from 'src/app/shared/interface/account';
+import { Roles } from 'src/app/shared/interface/roles';
+import { AuthServiceService } from 'src/app/shared/service/auth-service.service';
+import { RolesService } from 'src/app/shared/service/roles.service';
 import Swal from 'sweetalert2';
 
 @Component({

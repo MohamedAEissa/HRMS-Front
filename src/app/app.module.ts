@@ -20,7 +20,7 @@ import { GeneralsettingComponent } from './Components/generalsetting/generalsett
 import { AttendanceComponent } from './Components/attendance/attendance.component';
 import { OfficialHolidayComponent } from './Components/official-holiday/official-holiday.component';
 import { SalaryReportComponent } from './Components/salary-report/salary-report.component';
-import { JwtInterceptor } from './Shared/jwt.interceptor';
+import { JwtInterceptor } from './shared/jwt.interceptor';
 import { AccountMangementComponent } from './Components/account-mangement/account-mangement.component';
 import { RolesComponent } from './Components/roles/roles.component';
 import { LandingPageComponent } from './Components/landing-page/landing-page.component';

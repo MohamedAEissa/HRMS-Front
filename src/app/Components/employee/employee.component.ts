@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Employee } from 'src/app/Shared/interface/employee';
-import { EmployeeService } from 'src/app/Shared/Service/employee.service';
-import { Department } from 'src/app/Shared/interface/department';
-import { DepatrmentsService } from 'src/app/Shared/Service/depatrments.service';
+import { Employee } from 'src/app/shared/interface/employee';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
+import { Department } from 'src/app/shared/interface/department';
+import { DepatrmentsService } from 'src/app/shared/service/depatrments.service';
 import Swal from 'sweetalert2';
 
 @Component({

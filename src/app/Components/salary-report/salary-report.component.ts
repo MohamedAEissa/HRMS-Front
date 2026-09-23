@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Employee } from 'src/app/Shared/interface/employee';
-import { SalaryReport } from 'src/app/Shared/interface/salary-report';
-import { SalaryReportFiler } from 'src/app/Shared/interface/salary-report-filer';
-import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
-import { EmployeeService } from 'src/app/Shared/Service/employee.service';
-import { SalaryReportService } from 'src/app/Shared/Service/salary-report.service';
+import { Employee } from 'src/app/shared/interface/employee';
+import { SalaryReport } from 'src/app/shared/interface/salary-report';
+import { SalaryReportFiler } from 'src/app/shared/interface/salary-report-filer';
+import { AuthServiceService } from 'src/app/shared/service/auth-service.service';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
+import { SalaryReportService } from 'src/app/shared/service/salary-report.service';
 import Swal from 'sweetalert2';
 
 @Component({

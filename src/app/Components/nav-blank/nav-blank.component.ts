@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
+import { AuthServiceService } from 'src/app/shared/service/auth-service.service';
 
 @Component({
   selector: 'app-nav-blank',

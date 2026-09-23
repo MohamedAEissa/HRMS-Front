@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/Shared/interface/employee';
-import { EmployeeService } from 'src/app/Shared/Service/employee.service';
+import { Employee } from 'src/app/shared/interface/employee';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
 
 @Component({
   selector: 'app-employee-home',

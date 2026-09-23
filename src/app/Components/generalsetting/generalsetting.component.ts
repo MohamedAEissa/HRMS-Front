@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GeneralSetting } from 'src/app/Shared/interface/general-setting';
-import { GeneralSettingService } from 'src/app/Shared/Service/general-setting.service';
+import { GeneralSetting } from 'src/app/shared/interface/general-setting';
+import { GeneralSettingService } from 'src/app/shared/service/general-setting.service';
 import Swal from 'sweetalert2';
 
 @Component({

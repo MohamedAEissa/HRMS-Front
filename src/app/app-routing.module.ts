@@ -25,9 +25,9 @@ import { RolesComponent } from './Components/roles/roles.component';
 import { SalaryReportComponent } from './Components/salary-report/salary-report.component';
 import { AttendanceComponent } from './Components/attendance/attendance.component';
 
-// استيراد الجاردات
-import { authGuardGuard } from './Shared/guards/auth-guard.guard';
-import { roleGuard } from './Shared/guards/role.guard';
+
+import { authGuardGuard } from './shared/guards/auth-guard.guard';
+import { roleGuard } from './shared/guards/role.guard';
 
 const routes: Routes = [
  

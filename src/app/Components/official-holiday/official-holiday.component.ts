@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { OfficialHolidays } from 'src/app/Shared/interface/offical-holidays';
-import { OfficialHolidaysService } from 'src/app/Shared/Service/offical-holidays.service';
+import { OfficialHolidays } from 'src/app/shared/interface/offical-holidays';
+import { OfficialHolidaysService } from 'src/app/shared/service/offical-holidays.service';
 import Swal from 'sweetalert2';
 
 @Component({
