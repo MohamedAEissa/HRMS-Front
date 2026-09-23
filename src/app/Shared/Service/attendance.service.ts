@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Attendance } from '../interface/attendance';
 import { AttendanceFilter } from '../interface/attendance-filter';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AttendanceService {
 
-  private readonly baseUrl = 'https://localhost:7126/api/attendances';
+  private readonly baseUrl = `${environment.baseUrl}/attendances`;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -53,7 +54,6 @@ export class AttendanceService {
     return this._HttpClient.delete(`${this.baseUrl}/${id}`);
   }
 
- 
   importAttendanceFromExcel(fileData: FormData): Observable<any> {
     return this._HttpClient.post(`${this.baseUrl}/import-excel`, fileData);
   }
