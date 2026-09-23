@@ -2,28 +2,28 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // استيراد الـ Layouts
-import { BlankLayoutComponent } from './Components/blank-layout/blank-layout.component';
-import { AuthLAyoutComponent } from './Components/auth-layout/auth-layout.component';
+import { BlankLayoutComponent } from './components/blank-layout/blank-layout.component';
+import { AuthLAyoutComponent } from './components/auth-layout/auth-layout.component';
 
 // استيراد الـ Components العامة والصفحة الرئيسية
-import { LandingPageComponent } from './Components/landing-page/landing-page.component';
-import { LoginComponent } from './Components/login/login.component';
-import { NotfoundComponent } from './Components/notfound/notfound.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 
 // استيراد الشاشات الرئيسية لكل دور
-import { adminHomeComponent } from './Components/admin-home/admin-home.component';
-import { EmployeeHomeComponent } from './Components/employee-home/employee-home.component';
+import { adminHomeComponent } from './components/admin-home/admin-home.component';
+import { EmployeeHomeComponent } from './components/employee-home/employee-home.component';
 
 // استيراد الشاشات الإدارية والمشتركة
-import { EmployeeComponent } from './Components/employee/employee.component';
-import { DepartmentComponent } from './Components/department/department.component';
-import { GeneralsettingComponent } from './Components/generalsetting/generalsetting.component';
-import { OfficialHolidayComponent } from './Components/official-holiday/official-holiday.component';
-import { CreatAccForEmpComponent } from './Components/creat-acc-for-emp/creat-acc-for-emp.component';
-import { AccountMangementComponent } from './Components/account-mangement/account-mangement.component';
-import { RolesComponent } from './Components/roles/roles.component';
-import { SalaryReportComponent } from './Components/salary-report/salary-report.component';
-import { AttendanceComponent } from './Components/attendance/attendance.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { DepartmentComponent } from './components/department/department.component';
+import { GeneralsettingComponent } from './components/generalsetting/generalsetting.component';
+import { OfficialHolidayComponent } from './components/official-holiday/official-holiday.component';
+import { CreatAccForEmpComponent } from './components/creat-acc-for-emp/creat-acc-for-emp.component';
+import { AccountMangementComponent } from './components/account-mangement/account-mangement.component';
+import { RolesComponent } from './components/roles/roles.component';
+import { SalaryReportComponent } from './components/salary-report/salary-report.component';
+import { AttendanceComponent } from './components/attendance/attendance.component';
 
 
 import { authGuardGuard } from './shared/guards/auth-guard.guard';
