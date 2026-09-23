@@ -11,13 +11,13 @@
         <p class="text-slate small mb-0">Manage system roles, permissions, and creation history.</p>
       </div>
       <!-- Fixed: Changed openAddMode() to openAddModal() -->
-      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" 
+      <!-- <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" 
               data-bs-toggle="modal" 
               data-bs-target="#addRoleModal" 
               (click)="openAddModal()">
         <i class="fa-solid fa-plus text-xs"></i>
         <span>Add Role</span>
-      </button>
+      </button> -->
     </div>
 
     <!-- Official Roles Table Card -->
@@ -31,7 +31,7 @@
                 <th class="py-3">Role Name</th>
                 <th class="py-3">Description</th>   
                 <th class="py-3">Created At</th>    
-                <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th>
+                <!-- <th class="py-3 text-end pe-4" style="width: 120px;">Actions</th> -->
               </tr>
             </thead>
             <tbody>
@@ -57,7 +57,7 @@
                   </span>
                 </td>
 
-                <td class="text-end pe-4"> 
+                <!-- <td class="text-end pe-4"> 
                   <button (click)="openEditMode(role)" 
                           class="btn btn-icon-smooth text-slate me-1" 
                           title="Edit Role" 
@@ -68,7 +68,7 @@
                   <button (click)="deleteRole(role.id)" class="btn btn-icon-smooth text-danger" title="Delete Role">
                     <i class="fa-solid fa-trash"></i>
                   </button>
-                </td>
+                </td> -->
               </tr>
 
               <!-- Empty State -->
@@ -89,7 +89,7 @@
 </section>
 
 <!-- Modal: Add / Edit Role -->
-<div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
       <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
@@ -136,4 +136,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

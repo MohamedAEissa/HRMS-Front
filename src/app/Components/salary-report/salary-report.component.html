@@ -70,9 +70,9 @@
 
           <!-- Action Buttons (Filter & Reset) -->
           <div [ngClass]="isAdmin ? 'col-md-2' : 'col-md-4'" class="d-flex gap-2">
-            <button type="submit" class="btn btn-orange-main text-xs py-2 w-100 rounded-3 fw-semibold shadow-sm">
+            <button type="submit" class="btn btn-orange-main text-xs py-2 w-100 rounded-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-1">
               <i class="fa-solid fa-filter text-xs"></i>
-              
+              <span>Filter</span>
             </button>
             <button type="button" class="btn btn-light rounded-3 px-3 py-2 text-xs fw-semibold text-slate w-100 d-flex align-items-center justify-content-center gap-1" (click)="resetFilter()">
               <i class="fa-solid fa-rotate-right text-xs"></i>
@@ -135,7 +135,7 @@
                   <button (click)="openEditModal(report)" class="btn btn-icon-smooth text-slate me-1" title="Edit Report" data-bs-toggle="modal" data-bs-target="#SalaryReportModal">
                     <i class="fa-solid fa-pen"></i>
                   </button>
-                  <button (click)="deleteSalaryReport(report.id)" class="btn btn-icon-smooth text-danger" title="Delete Report">
+                  <button (click)="deleteSalaryReport(report.id, report.employeeName, report.month + '/' + report.year)" class="btn btn-icon-smooth text-danger" title="Delete Report">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
@@ -174,22 +174,43 @@
         <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
+
+        <!-- Error Alert Inside Modal -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm mb-3" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-circle-exclamation fs-6 me-2"></i>
+            <div class="text-xs lh-base" style="white-space: pre-line;">{{ errorMessage }}</div>
+          </div>
+          <button type="button" class="btn-close text-xs" (click)="errorMessage = ''" aria-label="Close"></button>
+        </div>
+
         <form [formGroup]="slaryReportForm" (ngSubmit)="submitForm()">
           
           <div class="mb-3">
             <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
-            <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="employeeId">
+            <select 
+              class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" 
+              formControlName="employeeId"
+              [class.is-invalid]="slaryReportForm.get('employeeId')?.invalid && slaryReportForm.get('employeeId')?.touched"
+            >
               <option [ngValue]="null" disabled selected>Select Employee</option>
               <option *ngFor="let emp of employeeData" [value]="emp.id">
                 {{ emp.fullName }} ({{ emp.departmentName }})
               </option>
             </select>
+            <div *ngIf="slaryReportForm.get('employeeId')?.invalid && slaryReportForm.get('employeeId')?.touched" class="text-danger text-xxs mt-1">
+              Please select an employee.
+            </div>
           </div>
 
           <div class="row g-3 mb-3">
             <div class="col-md-6">
               <label class="form-label fw-semibold text-xs text-slate mb-1">Month</label>
-              <select class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" formControlName="month">
+              <select 
+                class="form-select text-xs py-2 bg-light border-light-subtle rounded-3" 
+                formControlName="month"
+                [class.is-invalid]="slaryReportForm.get('month')?.invalid && slaryReportForm.get('month')?.touched"
+              >
                 <option [ngValue]="null" disabled selected>Select Month</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -204,10 +225,23 @@
                 <option value="11">November</option>
                 <option value="12">December</option>
               </select>
+              <div *ngIf="slaryReportForm.get('month')?.invalid && slaryReportForm.get('month')?.touched" class="text-danger text-xxs mt-1">
+                Month is required.
+              </div>
             </div>
+            
             <div class="col-md-6">
               <label class="form-label fw-semibold text-xs text-slate mb-1">Year</label>
-              <input type="number" class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" placeholder="2026" formControlName="year">
+              <input 
+                type="number" 
+                class="form-control text-xs py-2 bg-light border-light-subtle rounded-3" 
+                placeholder="2026" 
+                formControlName="year"
+                [class.is-invalid]="slaryReportForm.get('year')?.invalid && slaryReportForm.get('year')?.touched"
+              >
+              <div *ngIf="slaryReportForm.get('year')?.invalid && slaryReportForm.get('year')?.touched" class="text-danger text-xxs mt-1">
+                Year is required.
+              </div>
             </div>
           </div>
 

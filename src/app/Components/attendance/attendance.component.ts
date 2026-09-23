@@ -8,6 +8,7 @@ import { AttendanceService } from 'src/app/Shared/Service/attendance.service';
 import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
 import { EmployeeService } from 'src/app/Shared/Service/employee.service';
 import { DepatrmentsService } from 'src/app/Shared/Service/depatrments.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-attendance',
@@ -21,9 +22,9 @@ export class AttendanceComponent implements OnInit {
   isLoading: boolean = false;
   isEditMode: boolean = false;
   selectedAttendanceId: string = '';
+  selectedFile: File | null = null;
   
   isAdmin: boolean = false;
-
 
   filterFormGroup: FormGroup = new FormGroup({
     employeeId: new FormControl(''),
@@ -33,7 +34,6 @@ export class AttendanceComponent implements OnInit {
     date: new FormControl('')
   });
 
- 
   attendanceFormGroup: FormGroup = new FormGroup({
     employeeId: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]), 
@@ -67,7 +67,7 @@ export class AttendanceComponent implements OnInit {
 
   getAllEmployees(): void {
     this._EmployeeService.getEmployee().subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.employeeData = res?.data || res || [];
       },
       error: (err) => console.error('Error fetching employees:', err)
@@ -86,10 +86,10 @@ export class AttendanceComponent implements OnInit {
   getallAttendance(filter?: AttendanceFilter): void {
     this.isLoading = true;
     this._AttendanceService.getallAttendance(filter).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.attendanceData = res?.data || res || [];
         this.isLoading = false;
-      },       
+      },      
       error: (err) => {
         console.error('Error fetching all attendance:', err);
         this.isLoading = false;
@@ -100,7 +100,7 @@ export class AttendanceComponent implements OnInit {
   getCurrentUserAttendance(filter?: AttendanceFilter): void {
     this.isLoading = true;
     this._AttendanceService.getCurrentUserAttendance(filter).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.attendanceData = res?.data || res || [];
         this.isLoading = false;
       },
@@ -111,7 +111,6 @@ export class AttendanceComponent implements OnInit {
     });
   }
 
- 
   applyFilter(): void {
     const rawValues = this.filterFormGroup.value;
     const filter: AttendanceFilter = {};
@@ -135,7 +134,6 @@ export class AttendanceComponent implements OnInit {
       this.getCurrentUserAttendance(filter);
     }
   }
-
 
   resetFilter(): void {
     this.filterFormGroup.reset({
@@ -174,16 +172,26 @@ export class AttendanceComponent implements OnInit {
     });
   }
 
-  calculateStatus(checkInTime: string | null): number {
+  // حساب الـ Status بناءً على موعد الحضور الخاص بالموظف المحدد بدلاً من Hardcoded
+  calculateStatus(employeeId: string, checkInTime: string | null): number {
     if (!checkInTime || checkInTime.trim() === '') {
-      return 0; 
+      return 0; // Absent
     }
-    const [hours, minutes] = checkInTime.split(':').map(Number);
-  
-    if (hours < 8 || (hours === 8 && minutes === 0)) {
-      return 1; 
+
+    const selectedEmp = this.employeeData.find(e => e.id === employeeId);
+    
+    // موعد الحضور الرسمي للموظف من الكائن الخاص به، أو الافتراضي 08:00
+    const officialCheckIn = (selectedEmp as any)?.checkInTime || '08:00:00';
+    const [officialHours, officialMinutes] = officialCheckIn.split(':').map(Number);
+    const [actualHours, actualMinutes] = checkInTime.split(':').map(Number);
+
+    const actualTotalMinutes = actualHours * 60 + actualMinutes;
+    const officialTotalMinutes = officialHours * 60 + officialMinutes;
+
+    if (actualTotalMinutes <= officialTotalMinutes) {
+      return 1; // Present
     } else {
-      return 2; 
+      return 2; // Late
     }
   }
 
@@ -194,8 +202,8 @@ export class AttendanceComponent implements OnInit {
 
     this.isLoading = true;
     const rawValues = this.attendanceFormGroup.value;
-    const computedStatus = this.calculateStatus(rawValues.checkInTime);
- 
+    const computedStatus = this.calculateStatus(rawValues.employeeId, rawValues.checkInTime);
+
     const payload = {
       employeeId: rawValues.employeeId,
       date: rawValues.date,
@@ -209,11 +217,19 @@ export class AttendanceComponent implements OnInit {
         next: () => {
           this.refreshData();
           this.isLoading = false;
-          this.closeModal();
+          this.closeModal('RecordAttendanceModal');
+          Swal.fire({
+            title: 'Updated!',
+            text: 'Attendance record updated successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         },
         error: (err) => {
           console.error('Error Details:', err.error);
           this.isLoading = false;
+          Swal.fire('Error!', 'Failed to update attendance record.', 'error');
         }
       });
     } else {
@@ -221,20 +237,93 @@ export class AttendanceComponent implements OnInit {
         next: () => {
           this.refreshData();
           this.isLoading = false;
-          this.closeModal();
+          this.closeModal('RecordAttendanceModal');
+          Swal.fire({
+            title: 'Added!',
+            text: 'Attendance record added successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         },
         error: (err) => {
           console.error('Error Details:', err.error);
           this.isLoading = false;
+          Swal.fire('Error!', 'Failed to record attendance.', 'error');
         }
       });
     }
   }
 
-  deleteAttendance(id: string): void {
-    this._AttendanceService.deleteAttendance(id).subscribe({
-      next: () => this.refreshData(),
-      error: (err) => console.error('Error deleting attendance:', err)
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+ uploadExcel(): void {
+  if (!this.selectedFile) return;
+
+  this.isLoading = true;
+  const formData = new FormData();
+  
+  // تأكد أن اسم المفتاح 'file' أو 'File' مطابق لما هو مكتوب في C# Action Parameter
+  formData.append('file', this.selectedFile, this.selectedFile.name);
+
+  this._AttendanceService.importAttendanceFromExcel(formData).subscribe({
+    next: (res: any) => {
+      this.isLoading = false;
+      this.selectedFile = null;
+      this.closeModal('ImportExcelModal');
+      this.refreshData();
+
+      Swal.fire({
+        title: 'Import Completed!',
+        text: 'Attendance data imported successfully.',
+        icon: 'success'
+      });
+    },
+    error: (err) => {
+      this.isLoading = false;
+      console.error('Upload Error Details:', err);
+      // عرض تفاصيل الخطأ القادمة من الباك إند لمعرفة السبب الدقيق
+      const errorMessage = err?.error?.message || err?.error?.detail || 'Failed to import Excel file.';
+      Swal.fire('Error!', errorMessage, 'error');
+    }
+  });
+}
+
+  deleteAttendance(id: string, employeeName?: string): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: employeeName 
+        ? `You are about to delete attendance record for "${employeeName}".`
+        : 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._AttendanceService.deleteAttendance(id).subscribe({
+          next: () => {
+            this.refreshData();
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Attendance record has been deleted.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          },
+          error: (err) => {
+            Swal.fire('Error!', 'Failed to delete attendance record.', 'error');
+          }
+        });
+      }
     });
   }
 
@@ -280,8 +369,8 @@ export class AttendanceComponent implements OnInit {
     }
   }
 
-  closeModal(): void {
-    const modalElement = document.getElementById('RecordAttendanceModal');
+  closeModal(modalId: string): void {
+    const modalElement = document.getElementById(modalId);
     if (modalElement) {
       const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement);
       if (bootstrapModal) {

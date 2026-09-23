@@ -10,7 +10,7 @@
         </h3>
         <p class="text-slate small mb-0">Manage company public holidays and official days off.</p>
       </div>
-      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addHolidayModal">
+      <button class="btn btn-orange-main px-3 py-2 rounded-3 text-xs fw-semibold d-flex align-items-center gap-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addHolidayModal" (click)="openAddModal()">
         <i class="fa-solid fa-calendar-plus text-xs"></i>
         <span>Add Holiday</span>
       </button>
@@ -44,7 +44,7 @@
                 </td>
 
                 <td class="text-end pe-4">
-                  <button class="btn btn-icon-smooth text-danger" title="Delete" (click)="deleteHoliday(day.id)">
+                  <button class="btn btn-icon-smooth text-danger" title="Delete" (click)="deleteHoliday(day.id, day.name, day.date)">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
@@ -78,13 +78,32 @@
         <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
+
+        <!-- Error Alert Inside Modal -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm mb-3" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-circle-exclamation fs-6 me-2"></i>
+            <div class="text-xs lh-base" style="white-space: pre-line;">{{ errorMessage }}</div>
+          </div>
+          <button type="button" class="btn-close text-xs" (click)="errorMessage = ''" aria-label="Close"></button>
+        </div>
+
         <form [formGroup]="addHolidayForm" (ngSubmit)="addHoliday()">
 
           <div class="mb-3">
             <label class="form-label fw-semibold text-xs text-slate mb-1">Holiday Name</label>
             <div class="input-group">
               <span class="input-group-text bg-light border-light-subtle text-slate text-xs"><i class="fa-solid fa-tag"></i></span>
-              <input type="text" class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" placeholder="e.g., Labor Day" formControlName="name">
+              <input 
+                type="text" 
+                class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                placeholder="e.g., Labor Day" 
+                formControlName="name"
+                [class.is-invalid]="addHolidayForm.get('name')?.invalid && addHolidayForm.get('name')?.touched"
+              >
+            </div>
+            <div *ngIf="addHolidayForm.get('name')?.invalid && addHolidayForm.get('name')?.touched" class="text-danger text-xxs mt-1">
+              Holiday name is required.
             </div>
           </div>
 
@@ -92,7 +111,15 @@
             <label class="form-label fw-semibold text-xs text-slate mb-1">Holiday Date</label>
             <div class="input-group">
               <span class="input-group-text bg-light border-light-subtle text-slate text-xs"><i class="fa-regular fa-calendar"></i></span>
-              <input type="date" class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" formControlName="date">
+              <input 
+                type="date" 
+                class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                formControlName="date"
+                [class.is-invalid]="addHolidayForm.get('date')?.invalid && addHolidayForm.get('date')?.touched"
+              >
+            </div>
+            <div *ngIf="addHolidayForm.get('date')?.invalid && addHolidayForm.get('date')?.touched" class="text-danger text-xxs mt-1">
+              Holiday date is required.
             </div>
           </div>
 

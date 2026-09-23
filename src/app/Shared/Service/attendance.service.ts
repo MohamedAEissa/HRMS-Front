@@ -13,7 +13,6 @@ export class AttendanceService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-
   private buildParams(filter?: AttendanceFilter): HttpParams {
     let params = new HttpParams();
 
@@ -52,5 +51,10 @@ export class AttendanceService {
 
   deleteAttendance(id: string): Observable<any> {
     return this._HttpClient.delete(`${this.baseUrl}/${id}`);
+  }
+
+ 
+  importAttendanceFromExcel(fileData: FormData): Observable<any> {
+    return this._HttpClient.post(`${this.baseUrl}/import-excel`, fileData);
   }
 }

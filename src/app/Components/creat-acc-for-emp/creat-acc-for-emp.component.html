@@ -15,11 +15,15 @@
             <form [formGroup]="createAcc" (ngSubmit)="onSubmit()">
               
               <!-- Messages Alerts -->
-              <div *ngIf="successMessage" class="alert alert-success border-0 bg-success-subtle text-success text-xs rounded-3 p-3 mb-4">
-                {{ successMessage }}
+              <div *ngIf="successMessage" class="alert alert-success border-0 bg-success-subtle text-success text-xs rounded-3 p-3 mb-4 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-circle-check fs-6"></i>
+                <span>{{ successMessage }}</span>
               </div>
-              <div *ngIf="errorMessage" class="alert alert-danger border-0 bg-danger-subtle text-danger text-xs rounded-3 p-3 mb-4">
-                {{ errorMessage }}
+
+              <!-- عرض تفاصيل الخطأ بشكل واضح -->
+              <div *ngIf="errorMessage" class="alert alert-danger border-0 bg-danger-subtle text-danger text-xs rounded-3 p-3 mb-4 d-flex align-items-start gap-2">
+                <i class="fa-solid fa-circle-exclamation fs-6 mt-0.5"></i>
+                <div class="lh-base" style="white-space: pre-line;">{{ errorMessage }}</div>
               </div>
 
               <!-- Info Notice -->
@@ -54,7 +58,7 @@
                 </div>
               </div>
 
-              <!-- Role Field (Sends Role Name) -->
+              <!-- Role Field -->
               <div class="mb-3">
                 <label class="form-label fw-semibold text-xs text-slate mb-1">User Role</label>
                 <div class="input-group">
@@ -67,7 +71,6 @@
                     [class.is-invalid]="createAcc.get('role')?.invalid && createAcc.get('role')?.touched"
                   >
                     <option [ngValue]="null" disabled selected>Select Role</option>
-                    <!-- إرسال roleName بدلاً من id لأن Backend يستخدم RoleExistsAsync(dto.Role) -->
                     <option *ngFor="let roleItem of roleList" [value]="roleItem.roleName">
                       {{ roleItem.roleName }}
                     </option>
@@ -78,7 +81,7 @@
                 </div>
               </div>
 
-              <div class="row g-3 mb-4">
+            <div class="row g-3 mb-4">
                 <!-- Password Field -->
                 <div class="col-md-6">
                   <label class="form-label fw-semibold text-xs text-slate mb-1">Password</label>
@@ -88,10 +91,13 @@
                     </span>
                     <input 
                       formControlName="password" 
-                      type="password" 
-                      class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                      [type]="showPassword ? 'text' : 'password'" 
+                      class="form-control text-xs py-2 bg-light border-light-subtle border-start-0 border-end-0" 
                       [class.is-invalid]="createAcc.get('password')?.invalid && createAcc.get('password')?.touched"
                       placeholder="Enter a secure password">
+                    <button type="button" class="btn btn-light bg-light border border-light-subtle text-slate text-xs px-3" (click)="showPassword = !showPassword">
+                      <i class="fa-solid" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+                    </button>
                   </div>
                   <div *ngIf="createAcc.get('password')?.invalid && createAcc.get('password')?.touched" class="text-danger text-xxs mt-1">
                     <span *ngIf="createAcc.get('password')?.errors?.['required']">Password is required.</span>
@@ -108,10 +114,13 @@
                     </span>
                     <input 
                       formControlName="confirmPassword" 
-                      type="password" 
-                      class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                      [type]="showConfirmPassword ? 'text' : 'password'" 
+                      class="form-control text-xs py-2 bg-light border-light-subtle border-start-0 border-end-0" 
                       [class.is-invalid]="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched"
                       placeholder="Re-enter the password">
+                    <button type="button" class="btn btn-light bg-light border border-light-subtle text-slate text-xs px-3" (click)="showConfirmPassword = !showConfirmPassword">
+                      <i class="fa-solid" [class.fa-eye]="!showConfirmPassword" [class.fa-eye-slash]="showConfirmPassword"></i>
+                    </button>
                   </div>
                   <div *ngIf="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched" class="text-danger text-xxs mt-1">
                     <span *ngIf="createAcc.get('confirmPassword')?.errors?.['required']">Confirm password is required.</span>

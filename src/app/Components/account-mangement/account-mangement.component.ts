@@ -4,6 +4,7 @@ import { Account } from 'src/app/Shared/interface/account';
 import { Roles } from 'src/app/Shared/interface/roles';
 import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
 import { RolesService } from 'src/app/Shared/Service/roles.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-account-mangement',
@@ -21,7 +22,7 @@ export class AccountMangementComponent implements OnInit {
   accountFormGroup: FormGroup = new FormGroup({
     fullName: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    roleName: new FormControl(null, [Validators.required]), // تعديل من role إلى roleName
+    roleName: new FormControl(null, [Validators.required]),
     isActive: new FormControl(true, [Validators.required])
   });
 
@@ -57,14 +58,42 @@ export class AccountMangementComponent implements OnInit {
     });
   }
 
-  deleteAccount(id: string): void {
-    this._AuthServiceService.deleteAccount(id).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.getallAccounts();
-      },
-      error: (err) => {
-        console.log(err);
+ 
+  deleteAccount(id: string, fullName: string): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you really want to delete the account for "${fullName}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'rounded-4'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._AuthServiceService.deleteAccount(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Account has been deleted successfully.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+            this.getallAccounts();
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete account. Please try again.',
+              icon: 'error'
+            });
+            console.error(err);
+          }
+        });
       }
     });
   }
@@ -97,15 +126,28 @@ export class AccountMangementComponent implements OnInit {
     this.accountFormGroup.reset();
     this.getallAccounts();
 
-    const modalElement = document.getElementById('editAccountModal'); // تعديل الـ ID لـ editAccountModal
+    const modalElement = document.getElementById('editAccountModal');
     if (modalElement) {
-      const bootstrapModal = (window as any).bootstrap.Modal.getInstance(modalElement);
+      const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalElement);
       bootstrapModal?.hide();
     }
+
+    Swal.fire({
+      title: 'Updated!',
+      text: 'Account details updated successfully.',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false
+    });
   }
 
   private HandleError(error: any): void {
     this.isLoading = false;
     console.error(error);
+    Swal.fire({
+      title: 'Error!',
+      text: 'Something went wrong while updating.',
+      icon: 'error'
+    });
   }
 }

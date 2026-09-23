@@ -5,6 +5,7 @@ import { Roles } from 'src/app/Shared/interface/roles';
 import { AuthServiceService } from 'src/app/Shared/Service/auth-service.service';
 import { EmployeeService } from 'src/app/Shared/Service/employee.service';
 import { RolesService } from 'src/app/Shared/Service/roles.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-creat-acc-for-emp',
@@ -16,7 +17,8 @@ export class CreatAccForEmpComponent implements OnInit {
   isLoading: boolean = false;
   successMessage: string = '';
   errorMessage: string = '';
-
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   roleList: Roles[] = [];
   empList: Employee[] = [];
 
@@ -38,16 +40,13 @@ export class CreatAccForEmpComponent implements OnInit {
     this.getAvailableEmployees();
   }
 
-
   getAvailableEmployees(): void {
     this._AuthService.getAllAccounts().subscribe({
       next: (accountsRes) => {
-     
         const existingEmails = new Set(
           (accountsRes.data || accountsRes).map((acc: any) => acc.email?.toLowerCase())
         );
 
-       
         this._EmployeeService.getEmployee().subscribe({
           next: (empRes) => {
             const allEmployees: Employee[] = empRes.data || empRes;
@@ -71,9 +70,60 @@ export class CreatAccForEmpComponent implements OnInit {
     });
   }
 
+  // دالة مخصصة لتحليل وفك أخطاء الـ Backend وتحويلها لنص واضح
+  private parseErrorMessage(error: any): string {
+    if (!error) return 'Failed to create account.';
+
+    const errObj = error.error || error;
+
+    // 1. إذا كانت الرسالة نصية مباشرة
+    if (typeof errObj === 'string') {
+      return errObj;
+    }
+
+    // 2. إذا كانت تحتوي على message كـ string
+    if (typeof errObj?.message === 'string') {
+      return errObj.message;
+    }
+
+    // 3. إذا كانت مصفوفة أخطاء (مثل Identity Errors: [{code: "", description: ""}])
+    if (Array.isArray(errObj)) {
+      return errObj.map((e: any) => e.description || e.message || JSON.stringify(e)).join(' | ');
+    }
+
+    // 4. إذا كانت أخطاء ModelState / Validation (مثل error.errors = { Password: ["Min length 6", "Requires non-alphanumeric"] })
+    if (errObj?.errors && typeof errObj.errors === 'object') {
+      const messages: string[] = [];
+      for (const key of Object.keys(errObj.errors)) {
+        const val = errObj.errors[key];
+        if (Array.isArray(val)) {
+          messages.push(...val);
+        } else if (typeof val === 'string') {
+          messages.push(val);
+        }
+      }
+      if (messages.length > 0) {
+        return messages.join(' | ');
+      }
+    }
+
+   
+    if (Array.isArray(errObj?.errors)) {
+      return errObj.errors.map((e: any) => e.description || e.message || e).join(' | ');
+    }
+
+    return 'An unexpected error occurred while creating the account.';
+  }
+
   onSubmit(): void {
     if (this.createAcc.invalid) {
       this.createAcc.markAllAsTouched();
+      return;
+    }
+
+   
+    if (this.createAcc.value.password !== this.createAcc.value.confirmPassword) {
+      this.errorMessage = 'Password and Confirm Password do not match.';
       return;
     }
 
@@ -87,15 +137,30 @@ export class CreatAccForEmpComponent implements OnInit {
         if (response.success || response) {
           this.successMessage = response.message || 'Account created successfully!';
           this.createAcc.reset();
-          
-         
           this.getAvailableEmployees();
+
+          Swal.fire({
+            title: 'Created!',
+            text: 'Account created successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Error creating account:', error);
-        this.errorMessage = error.error?.message || error.error || 'Failed to create account.';
+        console.error('Full Error Response:', error);
+
+        // استخراج تفاصيل الخطأ بدقة
+        this.errorMessage = this.parseErrorMessage(error);
+
+        Swal.fire({
+          title: 'Error!',
+          text: this.errorMessage,
+          icon: 'error',
+          confirmButtonColor: '#dc3545'
+        });
       }
     });
   }
