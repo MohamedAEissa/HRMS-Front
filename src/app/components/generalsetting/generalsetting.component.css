@@ -1,0 +1,25 @@
+.settings-wrapper {
+  background-color: #f8fafc;
+  min-height: calc(100vh - 120px);
+  margin-top: 70px;
+}
+
+.input-group-text {
+  background-color: #f8fafc;
+  border-color: #dee2e6;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.custom-checkbox {
+  background-color: #fff;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.custom-checkbox:has(:checked) {
+  border-color: #2563eb !important;
+  background-color: #eff6ff;
+}

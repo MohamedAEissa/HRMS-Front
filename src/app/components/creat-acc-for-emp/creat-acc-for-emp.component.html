@@ -1,0 +1,148 @@
+<section class="register-wrapper py-4">
+  <div class="container-fluid px-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-9">
+        
+        <!-- Header -->
+        <div class="mb-4 text-center">
+          <h3 class="fw-bold text-navy mb-1">Create User Account</h3>
+          <p class="text-slate small mb-0">Grant system access to an existing employee by setting up their credentials.</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
+          <div class="card-body p-4 p-md-5">
+            <form [formGroup]="createAcc" (ngSubmit)="onSubmit()">
+              
+              <!-- Messages Alerts -->
+              <div *ngIf="successMessage" class="alert alert-success border-0 bg-success-subtle text-success text-xs rounded-3 p-3 mb-4 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-circle-check fs-6"></i>
+                <span>{{ successMessage }}</span>
+              </div>
+
+              <!-- عرض تفاصيل الخطأ بشكل واضح -->
+              <div *ngIf="errorMessage" class="alert alert-danger border-0 bg-danger-subtle text-danger text-xs rounded-3 p-3 mb-4 d-flex align-items-start gap-2">
+                <i class="fa-solid fa-circle-exclamation fs-6 mt-0.5"></i>
+                <div class="lh-base" style="white-space: pre-line;">{{ errorMessage }}</div>
+              </div>
+
+              <!-- Info Notice -->
+              <div class="alert alert-info border-0 bg-light text-navy border rounded-3 p-3 mb-4 d-flex align-items-center gap-3">
+                <i class="fa-solid fa-circle-info text-orange fs-5"></i>
+                <div class="text-xs text-slate">
+                  Ensure the employee’s email is already registered in the <strong class="text-navy">Employees Directory</strong> before creating an account.
+                </div>
+              </div>
+
+              <!-- Employee Field (Selects Email) -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-xs text-slate mb-1">Employee</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-light-subtle text-slate text-xs border-end-0">
+                    <i class="fa-solid fa-user"></i>
+                  </span>
+                  <select 
+                    formControlName="email" 
+                    class="form-select text-xs py-2 bg-light border-light-subtle rounded-end-3"
+                    [class.is-invalid]="createAcc.get('email')?.invalid && createAcc.get('email')?.touched"
+                  >
+                    <option [ngValue]="null" disabled selected>Select Employee</option>
+                    <option *ngFor="let emp of empList" [value]="emp.email">
+                      {{ emp.fullName }} ({{ emp.email }})
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="createAcc.get('email')?.invalid && createAcc.get('email')?.touched" class="text-danger text-xxs mt-1">
+                  <span *ngIf="createAcc.get('email')?.errors?.['required']">Employee selection is required.</span>
+                  <span *ngIf="createAcc.get('email')?.errors?.['email']">Please select a valid employee email.</span>
+                </div>
+              </div>
+
+              <!-- Role Field -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-xs text-slate mb-1">User Role</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-light-subtle text-slate text-xs border-end-0">
+                    <i class="fa-solid fa-user-shield"></i>
+                  </span>
+                  <select 
+                    formControlName="role" 
+                    class="form-select text-xs py-2 bg-light border-light-subtle rounded-end-3"
+                    [class.is-invalid]="createAcc.get('role')?.invalid && createAcc.get('role')?.touched"
+                  >
+                    <option [ngValue]="null" disabled selected>Select Role</option>
+                    <option *ngFor="let roleItem of roleList" [value]="roleItem.roleName">
+                      {{ roleItem.roleName }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="createAcc.get('role')?.invalid && createAcc.get('role')?.touched" class="text-danger text-xxs mt-1">
+                  Please select a role.
+                </div>
+              </div>
+
+            <div class="row g-3 mb-4">
+                <!-- Password Field -->
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold text-xs text-slate mb-1">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-light-subtle text-slate text-xs border-end-0">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <input 
+                      formControlName="password" 
+                      [type]="showPassword ? 'text' : 'password'" 
+                      class="form-control text-xs py-2 bg-light border-light-subtle border-start-0 border-end-0" 
+                      [class.is-invalid]="createAcc.get('password')?.invalid && createAcc.get('password')?.touched"
+                      placeholder="Enter a secure password">
+                    <button type="button" class="btn btn-light bg-light border border-light-subtle text-slate text-xs px-3" (click)="showPassword = !showPassword">
+                      <i class="fa-solid" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="createAcc.get('password')?.invalid && createAcc.get('password')?.touched" class="text-danger text-xxs mt-1">
+                    <span *ngIf="createAcc.get('password')?.errors?.['required']">Password is required.</span>
+                    <span *ngIf="createAcc.get('password')?.errors?.['minlength']">Minimum length is 6 characters.</span>
+                  </div>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold text-xs text-slate mb-1">Confirm Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-light-subtle text-slate text-xs border-end-0">
+                      <i class="fa-solid fa-key"></i>
+                    </span>
+                    <input 
+                      formControlName="confirmPassword" 
+                      [type]="showConfirmPassword ? 'text' : 'password'" 
+                      class="form-control text-xs py-2 bg-light border-light-subtle border-start-0 border-end-0" 
+                      [class.is-invalid]="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched"
+                      placeholder="Re-enter the password">
+                    <button type="button" class="btn btn-light bg-light border border-light-subtle text-slate text-xs px-3" (click)="showConfirmPassword = !showConfirmPassword">
+                      <i class="fa-solid" [class.fa-eye]="!showConfirmPassword" [class.fa-eye-slash]="showConfirmPassword"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="createAcc.get('confirmPassword')?.invalid && createAcc.get('confirmPassword')?.touched" class="text-danger text-xxs mt-1">
+                    <span *ngIf="createAcc.get('confirmPassword')?.errors?.['required']">Confirm password is required.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Buttons -->
+              <div class="d-flex align-items-center justify-content-end gap-2 pt-2">
+                <button type="button" class="btn btn-light rounded-3 px-4 text-xs fw-semibold text-slate" routerLink="/employees">Cancel</button>
+                <button [disabled]="isLoading" type="submit" class="btn btn-orange-main rounded-3 px-4 text-xs fw-semibold d-flex align-items-center gap-2">
+                  <i *ngIf="!isLoading" class="fa-solid fa-user-check"></i>
+                  <i *ngIf="isLoading" class="fa-solid fa-spinner fa-spin"></i>
+                  <span>{{ isLoading ? 'Creating...' : 'Create Account' }}</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+/* Palette & Typography Colors */
+.text-navy { color: #0f172a !important; }
+.text-slate { color: #64748b !important; }
+.text-orange { color: #ff6b35 !important; }
+
+.bg-orange-soft {
+  background-color: rgba(255, 107, 53, 0.12) !important;
+}
+
+.text-xxs { font-size: 0.72rem; }
+.text-xs { font-size: 0.8125rem; }
+.text-sm { font-size: 0.95rem; }
+
+/* Avatar Circle Styling - يضمن عدم الانضغاط أو التداخل */
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Orange Primary Button Style */
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff !important;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-orange-main:hover:not(:disabled) {
+  background-color: #e85a26;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
+}
+
+.btn-orange-main:disabled {
+  background-color: #cbd5e1;
+  color: #ffffff !important;
+}
+
+/* Minimal Action Icon Buttons */
+.btn-icon-smooth {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-icon-smooth:hover {
+  background-color: #f1f5f9;
+}
+
+/* Table Row Interactions */
+.smooth-row {
+  transition: background-color 0.15s ease;
+}
+
+.smooth-row:hover {
+  background-color: #f8fafc !important;
+}

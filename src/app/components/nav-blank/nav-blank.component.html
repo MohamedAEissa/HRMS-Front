@@ -1,0 +1,79 @@
+<header class="navbar-wrapper bg-white border-bottom sticky-top py-3">
+  <div class="container-fluid px-lg-5 px-4">
+    <div class="d-flex align-items-center justify-content-between">
+
+      
+      <a [routerLink]="isAdminOrHR() ? '/admin-home' : '/employee-home'" class="navbar-brand d-flex align-items-center gap-3 m-0 text-decoration-none">
+        <div class="brand-icon-box bg-orange text-white rounded-3 d-flex align-items-center justify-content-center shadow-sm">
+          <i class="fa-solid fa-bolt fs-5"></i>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="brand-title fw-extrabold text-navy lh-1">HRMS<span class="text-orange">.</span></span>
+          <span class="brand-subtitle text-slate text-xxs tracking-wider fw-bold">BUSINESS SUITE</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Menu -->
+      <nav class="nav-menu-wrapper d-none d-lg-flex align-items-center gap-2 bg-slate-50 px-3 py-2 rounded-3 border">
+        
+      
+        <a *ngIf="isAdminOrHR()" routerLink="/admin-home" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none">
+          <i class="fa-solid fa-house me-2"></i>Home
+        </a>
+
+     
+        <a *ngIf="isEmployee()" routerLink="/employee-home" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none">
+          <i class="fa-solid fa-house me-2"></i>Home
+        </a>
+
+        <!-- 3. شاشات مخصصة للـ Admin والـ HR فقط -->
+        <ng-container *ngIf="isAdminOrHR()">
+          <a routerLink="/departments" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none">
+            <i class="fa-solid fa-sitemap me-2"></i>Departments
+          </a>
+          <a routerLink="/employees" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none">
+            <i class="fa-solid fa-users me-2"></i>Employees
+          </a>
+        </ng-container>
+
+        <!-- 4. شاشات مشتركة تظهر للجميع (Admin, HR, Employee) -->
+        <a routerLink="/attendance" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none">
+          <i class="fa-solid fa-user-check me-2"></i>Attendance
+        </a>
+        <a routerLink="/salaryReport" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none text-nowrap">
+          <i class="fa-solid fa-file-invoice-dollar me-2"></i>Salary Report
+        </a>
+
+        <!-- 5. إدارة الحسابات للـ Admin والـ HR فقط -->
+        <a *ngIf="isAdminOrHR()" routerLink="/accounMangement" routerLinkActive="active" class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none text-nowrap">
+          <i class="fa-solid fa-users-gear me-2"></i>Account Management
+        </a>
+
+        <!-- 6. قائمة الإعدادات (Settings Dropdown) تظهر للـ Admin والـ HR فقط -->
+        <div class="dropdown" *ngIf="isAdminOrHR()">
+          <a class="nav-link-item rounded-2 px-3 py-2 text-sm fw-bold text-slate text-decoration-none dropdown-toggle d-flex align-items-center gap-1.5" 
+             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-sliders me-1"></i>Settings
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-3 mt-2 py-2">
+            <li><a class="dropdown-item text-xs py-2.5 px-3.5 fw-bold text-navy" routerLink="/role"><i class="fa-solid fa-user-shield me-2 text-purple"></i>Role Management</a></li>
+            <li><a class="dropdown-item text-xs py-2.5 px-3.5 fw-bold text-navy" routerLink="/generalSetting"><i class="fa-solid fa-gear me-2 text-orange"></i>General Settings</a></li>
+            <li><a class="dropdown-item text-xs py-2.5 px-3.5 fw-bold text-navy" routerLink="/officialHoliday"><i class="fa-solid fa-calendar-day me-2 text-purple"></i>Official Holidays</a></li>
+          </ul>
+        </div>
+
+      </nav>
+
+      <!-- Right Actions (User Controls & Logout) -->
+      <div class="d-flex align-items-center gap-3">
+        <div class="user-pill-container d-flex align-items-center bg-slate-50 px-4 py-1.5 rounded-3 border">
+          <button class="btn-icon-pill text-danger text-sm rounded-10 d-flex align-items-center fw-bold justify-content-center border-0 bg-transparent gap-1" title="Logout" (click)="logOutUser()">
+            <i class="fa-solid fa-power-off fs-6"></i>
+            <span>LogOut</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>

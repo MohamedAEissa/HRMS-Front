@@ -1,0 +1,27 @@
+/* Palette & Typography Colors */
+.text-navy { color: #0f172a !important; }
+.text-slate { color: #64748b !important; }
+.text-orange { color: #ff6b35 !important; }
+
+.text-xxs { font-size: 0.72rem; }
+.text-xs { font-size: 0.8125rem; }
+
+/* Orange Primary Button Style */
+.btn-orange-main {
+  background-color: #ff6b35;
+  color: #ffffff !important;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-orange-main:hover:not(:disabled) {
+  background-color: #e85a26;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
+}
+
+.btn-orange-main:disabled {
+  background-color: #cbd5e1;
+  color: #ffffff !important;
+}

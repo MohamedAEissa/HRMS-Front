@@ -1,0 +1,169 @@
+<section class="settings-wrapper py-4">
+  <div class="container-fluid px-4">
+    
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold text-navy mb-1">
+          <i class="fa-solid fa-gears text-orange me-2"></i>
+          General Settings
+        </h3>
+        <p class="text-slate small mb-0">System overtime, deduction rates, and weekly days off.</p>
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden border">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 custom-table">
+            <thead class="bg-light text-uppercase text-slate text-xxs fw-bold border-bottom">
+              <tr>
+                <th class="ps-4 py-3">Overtime Rate</th>
+                <th class="py-3">Deduction Rate</th>
+                <th class="py-3">Weekly Day Off</th>
+                <th class="text-end pe-4 py-3" style="width: 120px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="generalSettingData" class="smooth-row">
+                <td class="ps-4 fw-bold text-navy text-xs">{{ generalSettingData.overtimeHourRate }} x</td>
+                <td class="fw-bold text-navy text-xs">{{ generalSettingData.deductionHourRate }} x</td>
+                <td>
+                  <span class="badge bg-light text-black border text-xxs px-2.5 py-1.5 rounded-2 font-monospace">
+                    {{ generalSettingData.weeklyDaysOff }}
+                  </span>
+                </td>
+                <td class="text-end pe-4">
+                  <button 
+                    (click)="openEditModal()"
+                    type="button" 
+                    class="btn btn-icon-smooth text-slate" 
+                    title="Edit Settings"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#settingModal"
+                  >
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Empty state -->
+              <tr *ngIf="!generalSettingData">
+                <td colspan="4" class="text-center py-5 text-slate">
+                  <i class="fa-solid fa-sliders fs-2 mb-2 opacity-50 d-block"></i>
+                  <span class="text-xs">No settings found.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Edit Settings Modal -->
+<div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="settingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+      
+      <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+        <div>
+          <h5 class="modal-title fw-bold text-navy text-sm mb-1" id="settingModalLabel">Update General Settings</h5>
+          <p class="text-slate text-xs mb-0">Configure system rates and weekly days off</p>
+        </div>
+        <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-4">
+
+        <!-- Error Alert Inside Modal -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm mb-3" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-circle-exclamation fs-6 me-2"></i>
+            <div class="text-xs lh-base" style="white-space: pre-line;">{{ errorMessage }}</div>
+          </div>
+          <button type="button" class="btn-close text-xs" (click)="errorMessage = ''" aria-label="Close"></button>
+        </div>
+
+        <form [formGroup]="settingsForm" (ngSubmit)="updateGeneralSetting()">
+          
+          <!-- Overtime Hour Rate -->
+          <div class="mb-3">
+            <label for="overtime" class="form-label fw-semibold text-xs text-slate mb-1">Overtime Hour Rate</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-light-subtle text-slate text-xs"><i class="fa-solid fa-clock"></i></span>
+              <input 
+                formControlName="overtimeHourRate" 
+                type="number" 
+                id="overtime" 
+                step="0.1" 
+                class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                placeholder="e.g. 1.5"
+                [class.is-invalid]="settingsForm.get('overtimeHourRate')?.invalid && settingsForm.get('overtimeHourRate')?.touched"
+              >
+            </div>
+            <div *ngIf="settingsForm.get('overtimeHourRate')?.invalid && settingsForm.get('overtimeHourRate')?.touched" class="text-danger text-xxs mt-1">
+              Valid overtime rate is required.
+            </div>
+          </div>
+
+          <!-- Deduction Hour Rate -->
+          <div class="mb-3">
+            <label for="deduction" class="form-label fw-semibold text-xs text-slate mb-1">Deduction Hour Rate</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-light-subtle text-slate text-xs"><i class="fa-solid fa-circle-minus"></i></span>
+              <input 
+                formControlName="deductionHourRate" 
+                type="number" 
+                id="deduction" 
+                step="0.1" 
+                class="form-control text-xs py-2 bg-light border-light-subtle rounded-end-3" 
+                placeholder="e.g. 1.0"
+                [class.is-invalid]="settingsForm.get('deductionHourRate')?.invalid && settingsForm.get('deductionHourRate')?.touched"
+              >
+            </div>
+            <div *ngIf="settingsForm.get('deductionHourRate')?.invalid && settingsForm.get('deductionHourRate')?.touched" class="text-danger text-xxs mt-1">
+              Valid deduction rate is required.
+            </div>
+          </div>
+
+          <!-- Weekly Day Off (Radio Buttons) -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-xs text-slate mb-1 d-block">Weekly Day Off</label>
+            <div class="row g-2">
+              <div class="col-6" *ngFor="let day of daysOfWeek">
+                <div class="form-check p-2 border border-light-subtle rounded-3 bg-light d-flex align-items-center">
+                  <input 
+                    formControlName="weeklyDaysOff" 
+                    class="form-check-input ms-0 me-2" 
+                    type="radio" 
+                    [value]="day" 
+                    [id]="'radio_' + day"
+                  >
+                  <label class="form-check-label text-xs fw-semibold text-navy cursor-pointer" [for]="'radio_' + day">{{ day }}</label>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="settingsForm.get('weeklyDaysOff')?.invalid && settingsForm.get('weeklyDaysOff')?.touched" class="text-danger text-xxs mt-1">
+              Please select a weekly day off.
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+            <button type="button" class="btn btn-light rounded-3 px-3 text-xs fw-semibold text-slate" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" [disabled]="settingsForm.invalid || isLoading" class="btn btn-orange-main px-4 rounded-3 text-xs fw-semibold">
+              <span *ngIf="!isLoading">Save Changes</span>
+              <span *ngIf="isLoading"><i class="fa-solid fa-spinner fa-spin me-1"></i> Saving...</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.not-found-wrapper {
+  min-height: calc(100vh - 160px);
+  background-color: #f8fafc;
+  margin-top: 70px; /* ضمان الابتعاد عن الـ Fixed Navbar */
+}
+
+.error-code {
+  font-size: 7rem;
+  letter-spacing: -2px;
+  line-height: 1;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3) !important;
+}
