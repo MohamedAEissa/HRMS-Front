@@ -15,7 +15,10 @@ export class LoginComponent {
   msgError: string = '';
   token: string = '';
 
-  // متغيرات الـ Toast Notification
+  // Show/Hide Password Toggle Flag
+  showPassword: boolean = false;
+
+  // Toast Notification Variables
   showToast: boolean = false;
   toastMessage: string = '';
 
@@ -23,6 +26,11 @@ export class LoginComponent {
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required])
   });
+
+  // Toggle Password Visibility
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   handelFormLogin(): void {
     if (this.loginForm.valid) {
@@ -62,23 +70,20 @@ export class LoginComponent {
     }
   }
 
- 
+  // Copy Functionality with Animation & Toast Alert
   copyToClipboard(text: string, label: string, event: MouseEvent): void {
     navigator.clipboard.writeText(text).then(() => {
       const button = event.currentTarget as HTMLElement;
       const icon = button.querySelector('i');
 
-      // 1. إضافة تأثير الضغط وتغيير شكل الأيقونة لصح
       button.classList.add('copied-active');
       if (icon) {
         icon.className = 'fa-solid fa-check text-success fs-6';
       }
 
-    
       this.toastMessage = label;
       this.showToast = true;
 
-  
       setTimeout(() => {
         button.classList.remove('copied-active');
         if (icon) {
