@@ -23,22 +23,17 @@ export class LoginComponent {
   handelFormLogin(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
-    
 
       this._AuthServiceService.setLogin(this.loginForm.value).subscribe({
         next: (response) => {
           if (response.success == true) {
             this.isLoading = false;
             this.token = response.data.accessToken;
-            
 
-        
             localStorage.setItem('eToken', this.token);
 
-          
             const userRole = this._AuthServiceService.getUserRole();
 
-        
             if (userRole === 'Admin' || userRole === 'HR') {
               this._Router.navigate(['/admin-home']);
             } else if (userRole === 'Employee') {
@@ -61,5 +56,26 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+ 
+  copyToClipboard(text: string, event: MouseEvent): void {
+    navigator.clipboard.writeText(text).then(() => {
+      const button = event.currentTarget as HTMLElement;
+      const icon = button.querySelector('i');
+
+      if (icon) {
+        
+        const originalClass = icon.className;
+        icon.className = 'fa-solid fa-check text-success';
+
+       
+        setTimeout(() => {
+          icon.className = originalClass;
+        }, 1500);
+      }
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
   }
 }
