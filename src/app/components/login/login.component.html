@@ -154,51 +154,72 @@
 
       </form>
 
- <div class="demo-box mt-4 p-3 bg-light rounded-4 border">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-          <span class="badge bg-dark text-white fw-semibold px-2.5 py-1">Demo Credentials</span>
-          <small class="text-muted" style="font-size: 11px;">Click icon to copy</small>
-        </div>
+      <!-- Demo Credentials Box -->
+<div class="demo-box mt-4 p-3.5 bg-light rounded-4 border">
+  
+  <!-- Header Title & Badge -->
+  <div class="d-flex align-items-center justify-content-between mb-3 px-1">
+    <span class="badge bg-orange-subtle text-orange fw-bold px-2.5 py-1.5 rounded-2">
+      <i class="fa-solid fa-vial me-1.5"></i> Demo Accounts
+    </span>
+    <small class="text-muted" style="font-size: 11px;">Click icon to copy</small>
+  </div>
 
-        <!-- Admin Account -->
-        <div class="account-card p-2.5 rounded-3 border bg-white mb-2 shadow-sm">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-shield text-warning me-1"></i> Admin Account</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="text-secondary extra-small text-truncate me-2">Email: <code class="text-dark">admin@hrms.com</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('admin@hrms.com', 'Admin Email', $event)" title="Copy Email">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="text-secondary extra-small">Pass: <code class="text-dark">Admin123!</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('Admin123!', 'Admin Password', $event)" title="Copy Password">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-        </div>
+  <!-- Admin Account -->
+  <div class="account-card p-3 rounded-3 border bg-white mb-2.5 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="fw-bold text-dark extra-small">
+        <i class="fa-solid fa-user-shield text-orange me-1.5"></i> Admin Account
+      </span>
+    </div>
+    
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="text-secondary extra-small text-truncate me-2">
+        Email: <code class="text-dark">admin@hrms.com</code>
+      </span>
+      <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('admin@hrms.com', 'Admin Email', $event)" title="Copy Email">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
 
-        <!-- Employee Account -->
-        <div class="account-card p-2.5 rounded-3 border bg-white shadow-sm">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-tie text-info me-1"></i> Employee Account</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="text-secondary extra-small text-truncate me-2">Email: <code class="text-dark">emp@hrms.com</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('emp@hrms.com', 'Employee Email', $event)" title="Copy Email">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="text-secondary extra-small">Pass: <code class="text-dark">Emp123!</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('Emp123!', 'Employee Password', $event)" title="Copy Password">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-        </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="text-secondary extra-small">
+        Pass: <code class="text-dark">Admin123!</code>
+      </span>
+      <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('Admin123!', 'Admin Password', $event)" title="Copy Password">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
+  </div>
 
-      </div>
+  <!-- Employee Account -->
+  <div class="account-card p-3 rounded-3 border bg-white shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="fw-bold text-dark extra-small">
+        <i class="fa-solid fa-user-tie text-info me-1.5"></i> Employee Account
+      </span>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="text-secondary extra-small text-truncate me-2">
+        Email: <code class="text-dark">emp@hrms.com</code>
+      </span>
+      <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('emp@hrms.com', 'Employee Email', $event)" title="Copy Email">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="text-secondary extra-small">
+        Pass: <code class="text-dark">Emp123!</code>
+      </span>
+      <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('Emp123!', 'Employee Password', $event)" title="Copy Password">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
+  </div>
+
+</div>
 
     </div>
 

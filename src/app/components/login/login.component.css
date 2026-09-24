@@ -43,3 +43,53 @@
   background-color: #cbd5e1;
   color: #ffffff !important;
 }
+.text-orange {
+  color: #fd7e14 !important;
+}
+
+.bg-orange-subtle {
+  background-color: #ffe8cc !important;
+}
+
+.extra-small {
+  font-size: 0.82rem;
+}
+
+.account-card {
+  transition: all 0.25s ease-in-out;
+  border-color: #f1f3f5 !important;
+}
+
+.account-card:hover {
+  border-color: #fd7e14 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+.copy-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background-color: #ffe8cc !important;
+  color: #fd7e14 !important;
+  transform: scale(1.1);
+}
+
+.copied-active {
+  background-color: #d1e7dd !important;
+  transform: scale(1.15);
+}
+
+code {
+  background-color: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+}
