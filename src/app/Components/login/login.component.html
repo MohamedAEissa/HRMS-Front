@@ -1,47 +1,47 @@
-<div class="login-page-container d-flex align-items-center justify-content-center min-vh-100 bg-slate-50 py-5 position-relative">
+<div class="login-page-container d-flex align-items-center justify-content-center min-vh-100 bg-light py-5 position-relative">
   
-  <div class="card login-card border-0 shadow-lg rounded-4 overflow-hidden" style="max-width: 480px; width: 100%;">
+  <div class="card login-card border-0 shadow-lg rounded-4 overflow-hidden" style="max-width: 450px; width: 100%;">
     
-    <!-- Top Orange Accent Bar -->
-    <div class="bg-orange-main" style="height: 6px;"></div>
+    <!-- Top Decorative Line -->
+    <div class="bg-gradient-orange" style="height: 5px; background: linear-gradient(90deg, #fd7e14, #ffc107);"></div>
 
     <div class="card-body p-4 p-sm-5">
       
       <!-- Header Section -->
-      <div class="text-center mb-4 pb-2">
-        <div class="login-icon-box mx-auto mb-3 bg-orange-subtle text-orange rounded-circle d-flex align-items-center justify-content-center shadow-sm">
+      <div class="text-center mb-4">
+        <div class="login-icon-box mx-auto mb-3 bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 65px; height: 65px;">
           <i class="fa-solid fa-user-lock fs-3"></i>
         </div>
-        <h3 class="fw-bold text-dark mb-2">Welcome Back</h3>
-        <p class="text-muted small mb-0">Enter your credentials to access your HR portal</p>
+        <h3 class="fw-bold text-dark mb-1">Welcome Back</h3>
+        <p class="text-muted small mb-0">Enter your credentials to access your portal</p>
       </div>
 
       <!-- Form Start -->
       <form [formGroup]="loginForm" (ngSubmit)="handelFormLogin()">
         
         <!-- API Error Alert -->
-        <div class="alert alert-danger d-flex align-items-center gap-2 border-0 bg-danger-subtle text-danger small p-3 rounded-3 mb-4" *ngIf="msgError">
-          <i class="fa-solid fa-triangle-exclamation fs-6"></i>
+        <div class="alert alert-danger d-flex align-items-center gap-2 border-0 bg-danger-subtle text-danger small p-3 rounded-3 mb-3" *ngIf="msgError">
+          <i class="fa-solid fa-triangle-exclamation"></i>
           <span class="mb-0">{{ msgError }}</span>
         </div>
 
         <!-- Email Field -->
-        <div class="mb-4">
-          <label for="email" class="form-label fw-semibold small text-secondary mb-2">Email Address</label>
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold small text-secondary mb-1">Email Address</label>
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0 px-3 text-muted">
-              <i class="fa-regular fa-envelope"></i>
+            <span class="input-group-text bg-light border-end-0 px-3">
+              <i class="fa-regular fa-envelope text-muted"></i>
             </span>
             <input 
               type="text" 
               formControlName="email" 
               id="email" 
-              class="form-control bg-light border-start-0 py-2.5 shadow-none custom-input" 
+              class="form-control bg-light border-start-0 py-2 shadow-none" 
               placeholder="name@company.com"
             >
           </div>
           
-          <div class="text-danger small mt-1 ps-1" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+          <div class="text-danger small mt-1" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
             <span *ngIf="loginForm.get('email')?.getError('required')">
               <i class="fa-solid fa-circle-xmark me-1"></i>Email is required
             </span>
@@ -51,30 +51,23 @@
           </div>
         </div>
 
-        <!-- Password Field with Toggle Eye Icon -->
-        <div class="mb-4 pb-2">
-          <label for="password" class="form-label fw-semibold small text-secondary mb-2">Password</label>
+        <!-- Password Field -->
+        <div class="mb-4">
+          <label for="password" class="form-label fw-semibold small text-secondary mb-1">Password</label>
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0 px-3 text-muted">
-              <i class="fa-solid fa-key"></i>
+            <span class="input-group-text bg-light border-end-0 px-3">
+              <i class="fa-solid fa-key text-muted"></i>
             </span>
             <input 
-              [type]="showPassword ? 'text' : 'password'" 
+              type="password" 
               formControlName="password" 
               id="password" 
-              class="form-control bg-light border-start-0 border-end-0 py-2.5 shadow-none custom-input" 
+              class="form-control bg-light border-start-0 py-2 shadow-none" 
               placeholder="••••••••"
             >
-            <button 
-              type="button" 
-              class="input-group-text bg-light border-start-0 px-3 text-muted toggle-eye-btn" 
-              (click)="togglePasswordVisibility()"
-              title="Toggle Password Visibility">
-              <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye-slash text-orange' : 'fa-eye'"></i>
-            </button>
           </div>
           
-          <div class="text-danger small mt-1 ps-1" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+          <div class="text-danger small mt-1" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
             <span *ngIf="loginForm.get('password')?.getError('required')">
               <i class="fa-solid fa-circle-xmark me-1"></i>Password is required
             </span>
@@ -82,7 +75,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-orange-main text-white w-100 py-3 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm">
+        <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-warning text-white w-100 py-2.5 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm main-submit-btn">
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
           <span>{{ isLoading ? 'Signing In...' : 'Sign In' }}</span>
         </button>
@@ -90,47 +83,45 @@
       </form>
 
       <!-- Demo Credentials Box -->
-      <div class="demo-box mt-4 pt-2 p-3.5 bg-light rounded-4 border">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <span class="badge bg-orange-subtle text-orange fw-bold px-2.5 py-1.5 rounded-2">
-            <i class="fa-solid fa-vial me-1"></i> Demo Accounts
-          </span>
+      <div class="demo-box mt-4 p-3 bg-light rounded-4 border">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="badge bg-dark text-white fw-semibold px-2.5 py-1">Demo Credentials</span>
           <small class="text-muted" style="font-size: 11px;">Click icon to copy</small>
         </div>
 
         <!-- Admin Account -->
-        <div class="account-card p-3 rounded-3 border bg-white mb-2.5 shadow-sm">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-shield text-orange me-1.5"></i> Admin Account</span>
+        <div class="account-card p-2.5 rounded-3 border bg-white mb-2 shadow-sm">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-shield text-warning me-1"></i> Admin Account</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center mb-1.5">
+          <div class="d-flex justify-content-between align-items-center mb-1">
             <span class="text-secondary extra-small text-truncate me-2">Email: <code class="text-dark">admin@hrms.com</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('admin@hrms.com', 'Admin Email', $event)" title="Copy Email">
+            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('admin@hrms.com', 'Admin Email', $event)" title="Copy Email">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <span class="text-secondary extra-small">Pass: <code class="text-dark">Admin123!</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('Admin123!', 'Admin Password', $event)" title="Copy Password">
+            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('Admin123!', 'Admin Password', $event)" title="Copy Password">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
         </div>
 
         <!-- Employee Account -->
-        <div class="account-card p-3 rounded-3 border bg-white shadow-sm">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-tie text-info me-1.5"></i> Employee Account</span>
+        <div class="account-card p-2.5 rounded-3 border bg-white shadow-sm">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="fw-bold text-dark extra-small"><i class="fa-solid fa-user-tie text-info me-1"></i> Employee Account</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center mb-1.5">
+          <div class="d-flex justify-content-between align-items-center mb-1">
             <span class="text-secondary extra-small text-truncate me-2">Email: <code class="text-dark">emp@hrms.com</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('emp@hrms.com', 'Employee Email', $event)" title="Copy Email">
+            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('emp@hrms.com', 'Employee Email', $event)" title="Copy Email">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <span class="text-secondary extra-small">Pass: <code class="text-dark">Emp123!</code></span>
-            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1.5 copy-btn" (click)="copyToClipboard('Emp123!', 'Employee Password', $event)" title="Copy Password">
+            <button type="button" class="btn btn-sm btn-light border-0 rounded-2 p-1 copy-btn" (click)="copyToClipboard('Emp123!', 'Employee Password', $event)" title="Copy Password">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>
@@ -142,8 +133,8 @@
   </div>
 
   <!-- Toast Notification Message -->
-  <div class="toast-notification bg-dark text-white rounded-pill px-3.5 py-2.5 shadow-lg d-flex align-items-center gap-2" *ngIf="showToast">
-    <i class="fa-solid fa-circle-check text-success fs-6"></i>
+  <div class="toast-notification bg-dark text-white rounded-pill px-3 py-2 shadow-lg d-flex align-items-center gap-2" *ngIf="showToast">
+    <i class="fa-solid fa-circle-check text-success"></i>
     <span class="small">{{ toastMessage }} copied to clipboard!</span>
   </div>
 
