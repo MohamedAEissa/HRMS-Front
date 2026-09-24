@@ -1,89 +1,160 @@
-<div class="login-page-container d-flex align-items-center justify-content-center min-vh-100 bg-light py-5 position-relative">
-  
-  <div class="card login-card border-0 shadow-lg rounded-4 overflow-hidden" style="max-width: 450px; width: 100%;">
-    
-    <!-- Top Decorative Line -->
-    <div class="bg-gradient-orange" style="height: 5px; background: linear-gradient(90deg, #fd7e14, #ffc107);"></div>
+<div class="login-page-container">
+
+  <div class="card login-card border-0 shadow-lg rounded-4 overflow-hidden">
 
     <div class="card-body p-4 p-sm-5">
-      
+
+     
+
       <!-- Header Section -->
+
       <div class="text-center mb-4">
-        <div class="login-icon-box mx-auto mb-3 bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 65px; height: 65px;">
-          <i class="fa-solid fa-user-lock fs-3"></i>
+
+        <div class="login-icon-box mx-auto mb-3 bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm">
+
+          <i class="fa-solid fa-lock text-orange fs-4"></i>
+
         </div>
-        <h3 class="fw-bold text-dark mb-1">Welcome Back</h3>
-        <p class="text-muted small mb-0">Enter your credentials to access your portal</p>
+
+        <h3 class="fw-bold text-navy mb-1">Welcome Back</h3>
+
+        <p class="text-slate text-xs mb-0">Enter your credentials to access your portal</p>
+
       </div>
 
+
+
       <!-- Form Start -->
+
       <form [formGroup]="loginForm" (ngSubmit)="handelFormLogin()">
-        
+
+       
+
         <!-- API Error Alert -->
-        <div class="alert alert-danger d-flex align-items-center gap-2 border-0 bg-danger-subtle text-danger small p-3 rounded-3 mb-3" *ngIf="msgError">
+
+        <div class="alert alert-danger d-flex align-items-center gap-2 border-0 bg-danger-subtle text-danger text-xs p-3 rounded-3 mb-3" *ngIf="msgError">
+
           <i class="fa-solid fa-triangle-exclamation"></i>
+
           <span class="mb-0">{{ msgError }}</span>
+
         </div>
+
+
 
         <!-- Email Field -->
+
         <div class="mb-3">
-          <label for="email" class="form-label fw-semibold small text-secondary mb-1">Email Address</label>
+
+          <label for="email" class="form-label fw-semibold text-xs text-slate mb-1">Email Address</label>
+
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0 px-3">
-              <i class="fa-regular fa-envelope text-muted"></i>
+
+            <span class="input-group-text bg-light border-light-subtle text-slate border-end-0 px-3">
+
+              <i class="fa-regular fa-envelope"></i>
+
             </span>
-            <input 
-              type="text" 
-              formControlName="email" 
-              id="email" 
-              class="form-control bg-light border-start-0 py-2 shadow-none" 
+
+            <input
+
+              type="text"
+
+              formControlName="email"
+
+              id="email"
+
+              class="form-control text-xs py-2.5 bg-light border-light-subtle rounded-end-3"
+
               placeholder="name@company.com"
+
             >
+
           </div>
-          
-          <div class="text-danger small mt-1" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+
+         
+
+          <div class="text-danger text-xxs mt-1 ps-1" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+
             <span *ngIf="loginForm.get('email')?.getError('required')">
+
               <i class="fa-solid fa-circle-xmark me-1"></i>Email is required
+
             </span>
+
             <span *ngIf="loginForm.get('email')?.getError('email')">
+
               <i class="fa-solid fa-circle-xmark me-1"></i>Email format is invalid
+
             </span>
+
           </div>
+
         </div>
+
+
 
         <!-- Password Field -->
+
         <div class="mb-4">
-          <label for="password" class="form-label fw-semibold small text-secondary mb-1">Password</label>
+
+          <label for="password" class="form-label fw-semibold text-xs text-slate mb-1">Password</label>
+
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0 px-3">
-              <i class="fa-solid fa-key text-muted"></i>
+
+            <span class="input-group-text bg-light border-light-subtle text-slate border-end-0 px-3">
+
+              <i class="fa-solid fa-key"></i>
+
             </span>
-            <input 
-              type="password" 
-              formControlName="password" 
-              id="password" 
-              class="form-control bg-light border-start-0 py-2 shadow-none" 
+
+            <input
+
+              type="password"
+
+              formControlName="password"
+
+              id="password"
+
+              class="form-control text-xs py-2.5 bg-light border-light-subtle rounded-end-3"
+
               placeholder="••••••••"
+
             >
+
           </div>
-          
-          <div class="text-danger small mt-1" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+
+         
+
+          <div class="text-danger text-xxs mt-1 ps-1" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+
             <span *ngIf="loginForm.get('password')?.getError('required')">
+
               <i class="fa-solid fa-circle-xmark me-1"></i>Password is required
+
             </span>
+
           </div>
+
         </div>
 
+
+
         <!-- Submit Button -->
-        <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-warning text-white w-100 py-2.5 rounded-3 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm main-submit-btn">
+
+        <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-orange-main w-100 py-2.5 rounded-3 text-xs fw-semibold d-flex align-items-center justify-content-center gap-2">
+
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+
           <span>{{ isLoading ? 'Signing In...' : 'Sign In' }}</span>
+
         </button>
+
+
 
       </form>
 
-      <!-- Demo Credentials Box -->
-      <div class="demo-box mt-4 p-3 bg-light rounded-4 border">
+ <div class="demo-box mt-4 p-3 bg-light rounded-4 border">
         <div class="d-flex align-items-center justify-content-between mb-2">
           <span class="badge bg-dark text-white fw-semibold px-2.5 py-1">Demo Credentials</span>
           <small class="text-muted" style="font-size: 11px;">Click icon to copy</small>
@@ -130,12 +201,5 @@
       </div>
 
     </div>
-  </div>
 
-  <!-- Toast Notification Message -->
-  <div class="toast-notification bg-dark text-white rounded-pill px-3 py-2 shadow-lg d-flex align-items-center gap-2" *ngIf="showToast">
-    <i class="fa-solid fa-circle-check text-success"></i>
-    <span class="small">{{ toastMessage }} copied to clipboard!</span>
   </div>
-
-</div>
