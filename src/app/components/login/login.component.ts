@@ -15,6 +15,10 @@ export class LoginComponent {
   msgError: string = '';
   token: string = '';
 
+  // متغيرات الـ Toast Notification
+  showToast: boolean = false;
+  toastMessage: string = '';
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required])
@@ -59,21 +63,30 @@ export class LoginComponent {
   }
 
  
-  copyToClipboard(text: string, event: MouseEvent): void {
+  copyToClipboard(text: string, label: string, event: MouseEvent): void {
     navigator.clipboard.writeText(text).then(() => {
       const button = event.currentTarget as HTMLElement;
       const icon = button.querySelector('i');
 
+      // 1. إضافة تأثير الضغط وتغيير شكل الأيقونة لصح
+      button.classList.add('copied-active');
       if (icon) {
-        
-        const originalClass = icon.className;
-        icon.className = 'fa-solid fa-check text-success';
-
-       
-        setTimeout(() => {
-          icon.className = originalClass;
-        }, 1500);
+        icon.className = 'fa-solid fa-check text-success fs-6';
       }
+
+    
+      this.toastMessage = label;
+      this.showToast = true;
+
+  
+      setTimeout(() => {
+        button.classList.remove('copied-active');
+        if (icon) {
+          icon.className = 'fa-regular fa-copy';
+        }
+        this.showToast = false;
+      }, 1800);
+
     }).catch(err => {
       console.error('Failed to copy text: ', err);
     });
