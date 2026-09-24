@@ -3,7 +3,13 @@
   background-color: #f8fafc !important;
   min-height: 100vh;
 }
+.bg-orange-soft {
+  background-color: #fff3ea !important;
+}
 
+.text-orange {
+  color: #fd7e14 !important;
+}
 /* Header & Brand */
 .brand-icon-box {
   width: 40px;
